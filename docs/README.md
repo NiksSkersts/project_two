@@ -10,6 +10,6 @@
 
  Not gonna lie, now I regret not getting all those darn assets from [HB](https;//humblebundle.com).
 
-####Inspiration for this project: [MicroTown](https://www.snowyashgames.com/microtown/). It looks cool and I suggest you to try it out.
+#### Inspiration for this project: [MicroTown](https://www.snowyashgames.com/microtown/). It looks cool and I suggest you to try it out.
 
 #### [Last update: 03.07.2021]

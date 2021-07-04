@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
-using main.Camera;
-using main.Map;
+﻿using main.Map;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
+using MonoGame.Extended.ViewportAdapters;
 
 namespace main
 {
@@ -13,27 +12,24 @@ namespace main
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Camera.TwoD _camera;
+        private OrthographicCamera _camera;
+        private Vector2 _worldPosition;
+        private WorldSettings _worldSettings;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "/home/niks_skersts/Sources/project_two/main/Content";
             IsMouseVisible = true;
-            SetUpTile();
-        }
-
-        private static void SetUpTile()
-        {
-            Tile.TileSize = 32;
         }
 
         protected override void Initialize()
         {
-            World.WorldHeight = 377;
-            World.WorldWidth = 377;
-            _camera = new TwoD(_graphics.GraphicsDevice.Viewport);
             base.Initialize();
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            _camera = new OrthographicCamera(viewportAdapter);
+            _worldSettings = new WorldSettings();
+            WorldGen.CreatePlains();
         }
 
         protected override void LoadContent()
@@ -43,45 +39,43 @@ namespace main
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                _camera.Move(new Vector2(y:5,x:0));
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                _camera.Move(new Vector2(y:-5,x:0));
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                _camera.Move(new Vector2(y:0,x:-5));
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                _camera.Move(new Vector2(y:0,x:5));
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.OemPlus))
-            {
-                _camera.Zoom += 1;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.OemMinus))
-            {
-                _camera.Zoom -= 1;
-            }
-            
-            // Adjust zoom if the mouse wheel has moved
+            const float movementSpeed = 200;
+            _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
+            var mouseState = Mouse.GetState();
+            _worldPosition = _camera.ScreenToWorld(new Vector2(mouseState.X, mouseState.Y));
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            var @struct = new MapStruct(Content,World.WorldHeight,World.WorldWidth);
-            _spriteBatch.Begin(SpriteSortMode.BackToFront,BlendState.AlphaBlend,transformMatrix:_camera.GetTransformation());
-            @struct.DrawMap(_spriteBatch);
+            _graphics.GraphicsDevice.Clear(new Color(Color.Black, 0f));
+            var transformMatrix = _camera.GetViewMatrix();
+            _spriteBatch.Begin(transformMatrix: transformMatrix);
+            WorldGen.Draw(_graphics.GraphicsDevice,_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+        private Vector2 GetMovementDirection()
+        {
+            var movementDirection = Vector2.Zero;
+            var state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Down))
+            {
+                movementDirection += Vector2.UnitY;
+            }
+            if (state.IsKeyDown(Keys.Up))
+            {
+                movementDirection -= Vector2.UnitY;
+            }
+            if (state.IsKeyDown(Keys.Left))
+            {
+                movementDirection -= Vector2.UnitX;
+            }
+            if (state.IsKeyDown(Keys.Right))
+            {
+                movementDirection += Vector2.UnitX;
+            }
+            return movementDirection;
         }
     }
 }

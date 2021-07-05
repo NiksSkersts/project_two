@@ -4,7 +4,7 @@ using SimplexNoise;
 
 namespace main.Map.WorldGen
 {
-    class RandomMapGenerator : IWorldGen
+    class RandomMapGenerator
     {
         public World Generate(int width, int height)
         {

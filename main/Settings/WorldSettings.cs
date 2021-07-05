@@ -2,12 +2,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 namespace main.Settings
 {
-    public class WorldSettings : IWorld
+    public class WorldSettings
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public int Z { get; set; }
         public int TileSize { get; set; }
-        public int SeaLine { get; set; }
+        public void LoadSettings()
+        {
+            X = Y = 64;
+            TileSize = 64;
+        }
     }
 }

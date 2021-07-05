@@ -33,4 +33,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Nez\Nez.Portable\Nez.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Camera" />
+    </ItemGroup>
 </Project>

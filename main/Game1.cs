@@ -1,4 +1,6 @@
 ﻿using main.Map;
+using main.Map.Drawing;
+using main.Map.WorldGen;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,6 +17,8 @@ namespace main
         private OrthographicCamera _camera;
         private Vector2 _worldPosition;
         private WorldSettings _worldSettings;
+        private World _world;
+        private IDraw _draw;
 
         public Game1()
         {
@@ -29,7 +33,10 @@ namespace main
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportAdapter);
             _worldSettings = new WorldSettings();
-            WorldGen.CreatePlains();
+            IWorldGen gen = new RandomMapGenerator();
+            _draw = new BatchDraw();
+            _world = gen.Generate(WorldSettings.X, WorldSettings.Y);
+
         }
 
         protected override void LoadContent()
@@ -49,9 +56,10 @@ namespace main
         protected override void Draw(GameTime gameTime)
         {
             _graphics.GraphicsDevice.Clear(new Color(Color.Black, 0f));
+            
             var transformMatrix = _camera.GetViewMatrix();
-            _spriteBatch.Begin(transformMatrix: transformMatrix);
-            WorldGen.Draw(_graphics.GraphicsDevice,_spriteBatch);
+            _spriteBatch.Begin(SpriteSortMode.Deferred,transformMatrix: transformMatrix);
+            _draw.Draw(_world,_spriteBatch,_graphics.GraphicsDevice,Content);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

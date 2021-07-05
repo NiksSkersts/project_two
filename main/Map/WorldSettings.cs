@@ -10,9 +10,9 @@ namespace main.Map
 
         public WorldSettings()
         {
-            Y = X = 256;
+            Y = X = 80;
             Z = 64;
-            TileSize = 8;
+            TileSize = 16;
         }
     }
 }

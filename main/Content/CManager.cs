@@ -13,7 +13,15 @@ namespace main.Content
         public static IEnumerable<Texture2D> TileTexture2D(ContentManager contentManager)
         {
             contentManager.RootDirectory = "/home/niks_skersts/Sources/project_two/main/Content/MapObjects";
-            TileList = new[] {contentManager.Load<Texture2D>(@"grass"),contentManager.Load<Texture2D>(@"tree"),contentManager.Load<Texture2D>(@"deep_water"),contentManager.Load<Texture2D>(@"shallow_water"),contentManager.Load<Texture2D>(@"sand")};
+            TileList = new[]
+            {
+                contentManager.Load<Texture2D>(@"grass"),
+                contentManager.Load<Texture2D>(@"tree"),
+                contentManager.Load<Texture2D>(@"deep_water"),
+                contentManager.Load<Texture2D>(@"shallow_water"),
+                contentManager.Load<Texture2D>(@"sand"),
+                contentManager.Load<Texture2D>(@"mountain")
+            };
             return TileList;
         }
     }

@@ -1,6 +1,8 @@
-﻿using main.Map;
+﻿using System.Threading;
+using main.Map;
 using main.Map.Drawing;
 using main.Map.WorldGen;
+using main.Settings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,39 +17,41 @@ namespace main
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
+        private ICamera _cameraSettings;
+        private IWorldGen _gen;
         private Vector2 _worldPosition;
-        private WorldSettings _worldSettings;
+        private IWorld _worldSettings;
+        private ISettings _settings;
         private World _world;
         private IDraw _draw;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "/home/niks_skersts/Sources/project_two/main/Content";
             IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            base.Initialize();
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            _camera = new OrthographicCamera(viewportAdapter);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _cameraSettings = new Camera();
             _worldSettings = new WorldSettings();
-            IWorldGen gen = new RandomMapGenerator();
+            _settings = new Settings.Settings(_cameraSettings,_worldSettings);
+            _gen = new RandomMapGenerator();
             _draw = new BatchDraw();
-            _world = gen.Generate(WorldSettings.X, WorldSettings.Y);
-
+            base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _settings.LoadSettings();
+            _world = _gen.Generate(_worldSettings.X, _worldSettings.Y);
+            _camera = new OrthographicCamera(_cameraSettings.ViewportAdapter(Window,_graphics.GraphicsDevice));
         }
 
         protected override void Update(GameTime gameTime)
         {
-            const float movementSpeed = 200;
-            _camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
+            _camera.Move(_cameraSettings.GetMovementDirection() * _cameraSettings.MovementSpeed * gameTime.GetElapsedSeconds());
             var mouseState = Mouse.GetState();
             _worldPosition = _camera.ScreenToWorld(new Vector2(mouseState.X, mouseState.Y));
             base.Update(gameTime);
@@ -56,34 +60,11 @@ namespace main
         protected override void Draw(GameTime gameTime)
         {
             _graphics.GraphicsDevice.Clear(new Color(Color.Black, 0f));
-            
             var transformMatrix = _camera.GetViewMatrix();
             _spriteBatch.Begin(SpriteSortMode.Deferred,transformMatrix: transformMatrix);
-            _draw.Draw(_world,_spriteBatch,_graphics.GraphicsDevice,Content);
+            _draw.Draw(_world,_spriteBatch,_graphics.GraphicsDevice,Content,_worldSettings);
             _spriteBatch.End();
             base.Draw(gameTime);
-        }
-        private Vector2 GetMovementDirection()
-        {
-            var movementDirection = Vector2.Zero;
-            var state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Down))
-            {
-                movementDirection += Vector2.UnitY;
-            }
-            if (state.IsKeyDown(Keys.Up))
-            {
-                movementDirection -= Vector2.UnitY;
-            }
-            if (state.IsKeyDown(Keys.Left))
-            {
-                movementDirection -= Vector2.UnitX;
-            }
-            if (state.IsKeyDown(Keys.Right))
-            {
-                movementDirection += Vector2.UnitX;
-            }
-            return movementDirection;
         }
     }
 }

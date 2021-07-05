@@ -4,17 +4,18 @@ using main.Map.WorldGen;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using main.Content;
+using main.Settings;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.Particles;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.TextureAtlases;
 
 namespace main.Map.Drawing
 {
     public class BatchDraw : IDraw
     {
-        public void Draw(World world,SpriteBatch batch,GraphicsDevice device,ContentManager contentManager)
+        private IWorld _world;
+        public void Draw(World world, SpriteBatch batch, GraphicsDevice device, ContentManager contentManager,
+            IWorld worldSettings)
         {
+            _world = worldSettings;
             for (int x = 0; x < world._x; x++)
             {
                 for (int y = 0; y < world._y; y++)
@@ -49,10 +50,10 @@ namespace main.Map.Drawing
             {
                 batch.Draw(
                     CManager.TileTexture2D(contentManager).Single(p=>p.Name.Equals(terrain)),
-                    new Vector2(x*WorldSettings.TileSize,y*WorldSettings.TileSize),
+                    new Vector2(x*_world.TileSize,y*_world.TileSize),
                     new Rectangle(
-                        new Point(x*WorldSettings.TileSize,y*WorldSettings.TileSize),
-                        new Point((x*WorldSettings.TileSize)+WorldSettings.TileSize,(y*WorldSettings.TileSize)+WorldSettings.TileSize)),
+                        new Point(x*_world.TileSize,y*_world.TileSize),
+                        new Point((x*_world.TileSize)+_world.TileSize,(y*_world.TileSize)+_world.TileSize)),
                     Color.Aqua);
             }
         }

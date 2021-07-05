@@ -1,6 +1,4 @@
-using System.Collections;
 using main.Map.BuildingBlocks;
-using static main.Map.WorldSettings;
 
 namespace main.Map.WorldGen
 {
@@ -9,11 +7,6 @@ namespace main.Map.WorldGen
         public readonly int _x;
         public readonly int _y;
         public Tile[,] Tiles;
-
-        public World() : this(X, Y)
-        {
-            
-        }
 
         public World(int x, int y)
         {

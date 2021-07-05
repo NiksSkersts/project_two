@@ -1,23 +1,18 @@
-﻿using System.Threading;
-using main.Map;
+﻿using System;
+using main.Camera;
+using main.Content;
 using main.Map.Drawing;
 using main.Map.WorldGen;
 using main.Settings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
-using MonoGame.Extended.Shapes;
-using MonoGame.Extended.ViewportAdapters;
+using Nez;
 
 namespace main
 {
-    public class Game1 : Game
+    public class Game1 : Nez.Core
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-        private OrthographicCamera _camera;
-        private ICamera _cameraSettings;
+        private ICamera _camera;
         private IWorldGen _gen;
         private Vector2 _worldPosition;
         private IWorld _worldSettings;
@@ -25,18 +20,17 @@ namespace main
         private World _world;
         private IDraw _draw;
 
+
         public Game1()
         {
-            _graphics = new GraphicsDeviceManager(this);
             IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _cameraSettings = new Camera();
+            _camera = new Camera.Camera();
             _worldSettings = new WorldSettings();
-            _settings = new Settings.Settings(_cameraSettings,_worldSettings);
+            _settings = new Settings.Settings(_worldSettings);
             _gen = new RandomMapGenerator();
             _draw = new BatchDraw();
             base.Initialize();
@@ -44,27 +38,34 @@ namespace main
 
         protected override void LoadContent()
         {
+            _camera.LoadDefaults();
+            CManager.LoadTextures(Content);
             _settings.LoadSettings();
             _world = _gen.Generate(_worldSettings.X, _worldSettings.Y);
-            _camera = new OrthographicCamera(_cameraSettings.ViewportAdapter(Window,_graphics.GraphicsDevice));
         }
 
         protected override void Update(GameTime gameTime)
         {
-            _camera.Move(_cameraSettings.GetMovementDirection() * _cameraSettings.MovementSpeed * gameTime.GetElapsedSeconds());
-            var mouseState = Mouse.GetState();
-            _worldPosition = _camera.ScreenToWorld(new Vector2(mouseState.X, mouseState.Y));
+            var cameraPos = _camera.Movement() * _camera.MovementSpeed;
+            _camera.Pos -= cameraPos;
+            _camera.Zoom = _camera.MouseZoom();
+            _camera.Rotation = _camera.CameraRotation();
+            Console.WriteLine(_camera.Pos);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            _graphics.GraphicsDevice.Clear(new Color(Color.Black, 0f));
-            var transformMatrix = _camera.GetViewMatrix();
-            _spriteBatch.Begin(SpriteSortMode.Deferred,transformMatrix: transformMatrix);
-            _draw.Draw(_world,_spriteBatch,_graphics.GraphicsDevice,Content,_worldSettings);
-            _spriteBatch.End();
+            GraphicsDevice.Clear(Color.Black);
+            DrawMap();
             base.Draw(gameTime);
+        }
+
+        private void DrawMap()
+        {
+            Graphics.Instance.Batcher.Begin(transformationMatrix:_camera.ViewMatrix());
+            _draw.Draw(_world,Content,_worldSettings);
+            Graphics.Instance.Batcher.End();
         }
     }
 }

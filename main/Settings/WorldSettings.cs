@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.ViewportAdapters;
-
 namespace main.Settings
 {
     public class WorldSettings : IWorld

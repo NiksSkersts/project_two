@@ -9,20 +9,23 @@ namespace main.Content
 {
     public static class CManager
     {
-        private static IEnumerable<Texture2D> TileList;
-        public static IEnumerable<Texture2D> TileTexture2D(ContentManager contentManager)
+        public static Texture2D Grass;
+        public static Texture2D Tree;
+        public static Texture2D DeepWater;
+        public static Texture2D ShallowWater;
+        public static Texture2D Sand;
+        public static Texture2D Mountain;
+        public static void LoadTextures(ContentManager contentManager)
         {
             contentManager.RootDirectory = "/home/niks_skersts/Sources/project_two/main/Content/MapObjects";
-            TileList = new[]
-            {
-                contentManager.Load<Texture2D>(@"grass"),
-                contentManager.Load<Texture2D>(@"tree"),
-                contentManager.Load<Texture2D>(@"deep_water"),
-                contentManager.Load<Texture2D>(@"shallow_water"),
-                contentManager.Load<Texture2D>(@"sand"),
-                contentManager.Load<Texture2D>(@"mountain")
-            };
-            return TileList;
+            Grass = contentManager.Load<Texture2D>(@"grass");
+            Tree = contentManager.Load<Texture2D>(@"tree");
+            DeepWater = contentManager.Load<Texture2D>(@"deep_water");
+            ShallowWater = contentManager.Load<Texture2D>(@"shallow_water");
+            Sand = contentManager.Load<Texture2D>(@"sand");
+            Mountain = contentManager.Load<Texture2D>(@"mountain");
+
+
         }
     }
 }

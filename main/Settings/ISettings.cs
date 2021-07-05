@@ -1,17 +1,8 @@
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.ViewportAdapters;
 
 namespace main.Settings
 {
-    public interface ICamera
-    {
-        public Vector2 GetMovementDirection();
-        public BoxingViewportAdapter ViewportAdapter(GameWindow window, GraphicsDevice graphicsDevice);
-        public float MovementSpeed { get; set; }
-    }
-
     public interface IWorld
     {
         public int X { get; set; }

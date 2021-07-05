@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "main", "main\main.csproj", "{0830D55D-2499-4931-AC1B-7B26B3E8434C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nez", "Nez\Nez.Portable\Nez.csproj", "{699C1A22-4FC3-4D32-8F63-A83B1986F4B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{0830D55D-2499-4931-AC1B-7B26B3E8434C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0830D55D-2499-4931-AC1B-7B26B3E8434C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0830D55D-2499-4931-AC1B-7B26B3E8434C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{699C1A22-4FC3-4D32-8F63-A83B1986F4B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{699C1A22-4FC3-4D32-8F63-A83B1986F4B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{699C1A22-4FC3-4D32-8F63-A83B1986F4B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{699C1A22-4FC3-4D32-8F63-A83B1986F4B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

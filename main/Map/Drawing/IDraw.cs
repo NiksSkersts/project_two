@@ -7,7 +7,6 @@ namespace main.Map.Drawing
 {
     public interface IDraw
     {
-        void Draw(World world, SpriteBatch batch, GraphicsDevice device, ContentManager contentManager,
-            IWorld worldSettings);
+        void Draw(World world, ContentManager contentManager, IWorld worldSettings);
     }
 }

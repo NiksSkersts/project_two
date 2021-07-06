@@ -8,6 +8,9 @@ namespace main.Map.Generation
     {
         public World Generate(int width, int height)
         {
+            //todo add two more arrays for objects and (i forgot the second one).
+            //Additional arrays will work the same as layers and will be drawn over the first one.
+            //gotta implement collision.
             var map = new World(width, height);
             var noiseValues = GenerateNoise(width, height);
 
@@ -24,6 +27,10 @@ namespace main.Map.Generation
 
         private TerrainType DetermineTerrain(float noiseValue)
         {
+            //todo assign more cases
+            // raise noise on Mountain tile
+            // add more sand, grass, and so on variations depending on height map.
+            // add biome chunks?? Could be neat.
             switch (noiseValue)
             {
                 case var noise when noise <= 90:

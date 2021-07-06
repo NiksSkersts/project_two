@@ -10,16 +10,13 @@ namespace main.Scenes
     public class Game : BaseScene
     {
         private World world;
-        //todo Fix texture mishap
+        private UICanvas canvas;
         public override void Initialize()
         {
             base.Initialize();
+            canvas = CreateEntity("game-canvas").AddComponent(new UICanvas());
             var mapGen = new MapGen();
             world = mapGen.Generate(Settings.X, Settings.Y);
-            SetDesignResolution(640,368,SceneResolutionPolicy.ShowAllPixelPerfect);
-            Screen.SetSize(1280,736);
-            
-
         }
         
         public override void OnStart()

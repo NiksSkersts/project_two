@@ -1,3 +1,4 @@
+using System;
 using main.Content;
 using main.Map.BuildingBlocks;
 using Microsoft.Xna.Framework;
@@ -14,6 +15,7 @@ namespace main.Entities
 
         public MapRenderer(World world)
         {
+            //todo - make textures have smoother transition on texture borders. e.g: water -> sand.
             _world = world;
         }
 
@@ -40,16 +42,33 @@ namespace main.Entities
 
         private void Draw(int x, int y)
         {
-            DrawFunc();
             // todo recheck the function. Distorted image in result.
-            void DrawFunc()
+            //nvm, my brain died
+            var terrainType = _world.Tiles[x, y].TerrainType;
+            switch (terrainType)
             {
-                Graphics.Instance.Batcher.Draw(Textures.Grass1,
-                    new Rectangle(
-                        new Point(
-                            x*Settings.TileSize,Settings.TileSize*y),
-                        new Point((x*Settings.TileSize)+Settings.TileSize,(y*Settings.TileSize)+Settings.TileSize))
-                );
+                case TerrainType.None:
+                    break;
+                case TerrainType.Water:
+                    DrawFunc(Textures.Water1);
+                    break;
+                case TerrainType.Sand:
+                    DrawFunc(Textures.Sand1);
+                    break;
+                case TerrainType.Grass:
+                    DrawFunc(Textures.Grass1);
+                    break;
+                case TerrainType.Mountain:
+                    DrawFunc(Textures.Cobble1);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            void DrawFunc(Texture2D texture2D)
+            {
+                Graphics.Instance.Batcher.Draw(texture2D, 
+                    new Rectangle(new Point(x*Settings.TileSize,Settings.TileSize*y), new Point(Settings.TileSize,Settings.TileSize)));
             }
         }
     }

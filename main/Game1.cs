@@ -26,8 +26,8 @@ namespace main
         private static void Defaults()
         {
             Settings.TileSize = 32;
-            Settings.X = 64;
-            Settings.Y = 64;
+            Settings.X = 256;
+            Settings.Y = 256;
             
         }
     }

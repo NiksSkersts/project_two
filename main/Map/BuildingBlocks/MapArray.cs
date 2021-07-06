@@ -1,6 +1,4 @@
-using main.Map.BuildingBlocks;
-
-namespace main.Map.WorldGen
+namespace main.Map.BuildingBlocks
 {
     public class World
     {

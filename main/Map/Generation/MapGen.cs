@@ -2,9 +2,9 @@ using System;
 using main.Map.BuildingBlocks;
 using SimplexNoise;
 
-namespace main.Map.WorldGen
+namespace main.Map.Generation
 {
-    class RandomMapGenerator
+    public class MapGen
     {
         public World Generate(int width, int height)
         {
@@ -40,7 +40,7 @@ namespace main.Map.WorldGen
         private float[,] GenerateNoise(int width, int height)
         {
             var random = new Random();
-            Noise.Seed = random.Next(32123213);
+            Noise.Seed = random.Next();
             var scale = 0.01f;
             var noiseValues = Noise.Calc2D(width, height, scale);
 

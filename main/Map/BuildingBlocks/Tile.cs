@@ -11,9 +11,11 @@ namespace main.Map.BuildingBlocks
             
         }
 
-        public Tile(TerrainType terrainType)
+        private Tile(TerrainType terrainType)
         {
             TerrainType = terrainType;
+            var tileSize = Settings.TileSize;
+            
         }
     }
 }

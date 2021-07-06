@@ -21,7 +21,7 @@ namespace main.Entities
 
         public override void Render(Batcher batcher, Camera camera)
         {
-            
+            //todo - add the darn camera!
             DrawMap();
         }
 

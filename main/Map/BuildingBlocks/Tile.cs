@@ -2,6 +2,7 @@ using System.Diagnostics;
 
 namespace main.Map.BuildingBlocks
 {
+    //Basic building block of my map generator.
     [DebuggerDisplay("{" + nameof(TerrainType) + ", nq}")]
     //todo read
     //Create Tiles that are made out of more tiles?

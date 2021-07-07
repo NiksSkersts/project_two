@@ -10,6 +10,8 @@ namespace main.Components
                 private VirtualButton Down;
                 private VirtualButton Left;
                 private VirtualButton Right;
+                private VirtualButton OemPlus;
+                private VirtualButton OemMinus;
                 private Vector2 movement;
         
                 public CameraMovement()
@@ -18,10 +20,14 @@ namespace main.Components
                     Down = new VirtualButton();
                     Left = new VirtualButton();
                     Right = new VirtualButton();
+                    OemPlus = new VirtualButton();
+                    OemMinus = new VirtualButton();
                     Up.AddKeyboardKey(Keys.Up);
                     Down.AddKeyboardKey(Keys.Down);
                     Left.AddKeyboardKey(Keys.Left);
                     Right.AddKeyboardKey(Keys.Right);
+                    OemPlus.AddKeyboardKey(Keys.OemPlus);
+                    OemMinus.AddKeyboardKey(Keys.OemMinus);
                 }
                 public Vector2 Movement()
                 {
@@ -45,7 +51,23 @@ namespace main.Components
                     {
                         movement += new Vector2(1,0);
                     }
-                    return movement*100;
+                    return movement*Settings.CameraMovementSpeed;
+                }
+
+                public float Zoom()
+                {
+                    float zoom = 0;
+                    if (OemPlus.IsDown)
+                    {
+                        zoom += 1;
+                    }
+
+                    if (OemMinus.IsDown)
+                    {
+                        zoom -= 1;
+                    }
+
+                    return zoom;
                 }
     }
 }

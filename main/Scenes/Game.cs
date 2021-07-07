@@ -10,22 +10,19 @@ namespace main.Scenes
     public class Game : BaseScene
     {
         private World _world;
-        private UICanvas _canvas;
-        private Camera _camera;
+        //private Camera _camera;
         private MapRenderer _map;
         private CameraMovement _cameraMovement;
-        private Entity Character;
+        private FollowCamera _cameraf;
         public override void Initialize()
         {
             base.Initialize();
-            _canvas = CreateEntity("game-canvas").AddComponent(new UICanvas());
             var mapGen = new MapGen();
             _world = mapGen.Generate(Settings.X, Settings.Y);
             _map = CreateEntity("map").AddComponent(new MapRenderer(_world));
-            _camera = CreateEntity("camera").AddComponent(new Camera());
-            Character = CreateEntity("character");
-            _cameraMovement = Character.AddComponent(new CameraMovement());
-            Camera.Entity.AddComponent(new FollowCamera(Character));
+            //_camera = CreateEntity("camera").AddComponent(new Camera());
+            _cameraMovement = CreateEntity("character").AddComponent(new CameraMovement());
+            _cameraf = Camera.Entity.AddComponent(new FollowCamera(_cameraMovement.Entity));
 
         }
         public override void OnStart()
@@ -36,11 +33,12 @@ namespace main.Scenes
 
         public override void Update()
         {
-            Graphics.Instance.Batcher.Begin(_camera.ViewProjectionMatrix);
-            _map.Render(Graphics.Instance.Batcher,_camera);
+            Graphics.Instance.Batcher.Begin(Camera.TransformMatrix);
+            _map.Render(Graphics.Instance.Batcher,Camera);
             Graphics.Instance.Batcher.End();
+            _cameraMovement.Entity.Position = _cameraMovement.Movement();
+            Camera.ZoomIn(_cameraMovement.Zoom());
             base.Update();
-            Character.Position = _cameraMovement.Movement();
         }
         public override Table Table { get; set; }
     }

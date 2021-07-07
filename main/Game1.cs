@@ -28,7 +28,8 @@ namespace main
             Settings.TileSize = 32;
             Settings.X = 256;
             Settings.Y = 256;
-            
+            Settings.CameraMovementSpeed = 100f;
+
         }
     }
 }

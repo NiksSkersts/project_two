@@ -31,7 +31,39 @@ namespace main.Content
              Sand2= Core.Content.LoadTexture("MapObj/Sand2");
              Sand3= Core.Content.LoadTexture("MapObj/Sand3");
              Water1= Core.Content.LoadTexture("MapObj/Water1");
+             AGrass= Core.Content.LoadTexture("Artsy/noisy-grass");
+             AGroundDark= Core.Content.LoadTexture("Artsy/noisy-grounddark");
+             ALava= Core.Content.LoadTexture("Artsy/noisy-lava");
+             ARock= Core.Content.LoadTexture("Artsy/noisy-rock");
+             ARockHigh= Core.Content.LoadTexture("Artsy/noisy-rockhigh");
+             ASand= Core.Content.LoadTexture("Artsy/noisy-sand");
+             ASandWhite= Core.Content.LoadTexture("Artsy/noisy-sandwhite");
+             ASwamp= Core.Content.LoadTexture("Artsy/noisy-swamp");
+             AWaterDeep= Core.Content.LoadTexture("Artsy/noisy-waterdeep");
+             AWaterShallow= Core.Content.LoadTexture("Artsy/noisy-watershallow");
+
         }
+
+        public static Texture2D AWaterShallow { get; set; }
+
+        public static Texture2D AWaterDeep { get; set; }
+
+        public static Texture2D ASwamp { get; set; }
+
+        public static Texture2D ASandWhite { get; set; }
+
+        public static Texture2D ASand { get; set; }
+
+        public static Texture2D ARockHigh { get; set; }
+
+        public static Texture2D ARock { get; set; }
+
+        public static Texture2D ALava { get; set; }
+
+        public static Texture2D AGroundDark { get; set; }
+
+        public static Texture2D AGrass { get; set; }
+
         public static Texture2D Cobble1 { get; set; }
         public static Texture2D Dirt1 { get; set; }
         public static Texture2D Dirt2 { get; set; }
@@ -53,7 +85,11 @@ namespace main.Content
         public static Texture2D Sand2 { get; set; }
         public static Texture2D Sand3 { get; set; }
         public static Texture2D Water1 { get; set; }
-
         
+
+
+
+
+
     }
 }

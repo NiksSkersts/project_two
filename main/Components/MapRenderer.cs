@@ -10,11 +10,13 @@ namespace main.Components
 {
     public class MapRenderer : RenderableComponent, IUpdatable
     {
+        private Camera _camera;
         private Map.BuildingBlocks.Map Map;
         public override float Width => Settings.X*Settings.TileSize;
         public override float Height => Settings.Y*Settings.TileSize;
         public override void Render(Batcher batcher, Camera camera)
         {
+            _camera = camera;
             DrawMapLayer();
         }
         public MapRenderer(Map.BuildingBlocks.Map map)
@@ -25,13 +27,22 @@ namespace main.Components
 
         private void DrawMapLayer()
         {
-            for (int x = 0; x < Settings.X; x++)
+            for (int x = (int) (_camera.Bounds.X/Settings.TileSize); x <= ((_camera.Bounds.Width+_camera.Bounds.X)/Settings.TileSize) ; x++)
             {
-                for (int y = 0; y < Settings.Y; y++)
+                for (int y = (int) (_camera.Bounds.Y/Settings.TileSize) ; y <= ((_camera.Bounds.Y+_camera.Bounds.Height)/Settings.TileSize); y++)
                 {
-                    Draw(x,y);
+                    if (x>=32 || y>=32 || x<0 || y<0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Draw(x,y);
+                    }
+
                 }
             }
+            
         }
         private void Draw(int x, int y)
         {
@@ -43,16 +54,16 @@ namespace main.Components
                 case TerrainType.None:
                     break;
                 case TerrainType.Water:
-                    DrawFunc(Textures.Water1);
+                    DrawFunc(Textures.AWaterShallow);
                     break;
                 case TerrainType.Sand:
-                    DrawFunc(Textures.Sand1);
+                    DrawFunc(Textures.ASand);
                     break;
                 case TerrainType.Grass:
-                    DrawFunc(Textures.Grass1);
+                    DrawFunc(Textures.AGrass);
                     break;
                 case TerrainType.Mountain:
-                    DrawFunc(Textures.Cobble1);
+                    DrawFunc(Textures.ARock);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

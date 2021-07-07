@@ -10,6 +10,9 @@
 - [Catalin Pavel, Sand tile,cc0](https://opengameart.org/content/sand-textures-pack-2) - [Graphics]
 - [Bewilder studios, Ground Sprite Pack, CC-BY 4.0](https://opengameart.org/content/ground-sprite-pack) - [Graphics]
 - [Jessse, Material tiles, CC0](https://opengameart.org/content/material-tiles-32x32) - [Graphics]
+- [LuminousDragonGames, Grass Tiles,CC0](https://opengameart.org/content/blended-textures-of-dirt-and-grass) - [Graphics]
+- [qubodup, Noisy tile set, CC0](https://opengameart.org/content/noisy-tile-set-lava-mountain-water-sand-dirt-grass) - [Graphics]
+- [ArMM1998, Zelda-like tilesets and sprites, CC0](https://opengameart.org/content/zelda-like-tilesets-and-sprites)- [Graphics]
 
 
 ### List of people, companies, so on and so forth, who directly or indirectly contributed into making this project possible:

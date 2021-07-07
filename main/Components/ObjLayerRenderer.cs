@@ -36,7 +36,7 @@ namespace main.Components
                                 new Rectangle(
                                     new Point((i*Settings.GridSize)+(x*Settings.TileSize),(j*Settings.GridSize)+(y*Settings.TileSize)),
                                     new Point(Settings.GridSize,Settings.GridSize)),
-                                new Color(Color.White, 0),1f);
+                                new Color(Color.White, 0),0f);
                         }
                     }
                 }

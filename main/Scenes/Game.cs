@@ -19,29 +19,42 @@ namespace main.Scenes
         private CameraMovement _cameraMovement;
         public override void Initialize()
         {
-            var renderer = AddRenderer(new DefaultRenderer());
             base.Initialize();
+            SetupRendering();
+            SetupCamera();
+            AddRenderer(new DefaultRenderer());
             Map = new Map.BuildingBlocks.Map();
-            var _obj = CreateEntity("obj").AddComponent(new ObjLayerRenderer(Map));
-            var _map = CreateEntity("map").AddComponent(new MapRenderer(Map));
-            _obj.RenderLayer = 0;
-            _map.RenderLayer = 1;
-            _cameraMovement = CreateEntity("character").AddComponent(new CameraMovement());
-            Camera.Entity.AddComponent(new FollowCamera(_cameraMovement.Entity));
+        }
 
+        private void SetupRendering()
+        {
+            //var _obj = CreateEntity("obj").AddComponent(new ObjLayerRenderer(Map));
+            var _map = CreateEntity("map").AddComponent(new MapRenderer(Map));
+            //_obj.RenderLayer = 0;
+            _map.RenderLayer = 1;
+        }
+
+        private void SetupCamera()
+        {
+            _cameraMovement = CreateEntity("character").AddComponent(new CameraMovement());
+            _cameraMovement.Entity.SetPosition(Vector2.One);
+            Camera.Entity.AddComponent(new FollowCamera(_cameraMovement.Entity));
         }
         public override void OnStart()
         {
             ClearColor = Color.Black;
             base.OnStart();
+            Camera.RawZoom = 8;
+
         }
 
         public override void Update()
         {
-            _cameraMovement.Entity.Position = _cameraMovement.Movement();
-            Camera.ZoomIn(_cameraMovement.Zoom());
+            //Camera.Entity.Position += _cameraMovement.Movement(Camera);
+            //Camera.ZoomIn(_cameraMovement.Zoom());
             base.Update();
         }
+        
         public override Table Table { get; set; }
     }
 }

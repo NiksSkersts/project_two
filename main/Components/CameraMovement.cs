@@ -29,28 +29,40 @@ namespace main.Components
                     OemPlus.AddKeyboardKey(Keys.OemPlus);
                     OemMinus.AddKeyboardKey(Keys.OemMinus);
                 }
-                public Vector2 Movement()
+                public Vector2 Movement(Camera camera)
                 {
+                    float movementY=0;
+                    float movementX=0;
                     
                     if (Up.IsDown)
                     {
-                        movement += new Vector2(0,-1);
+                        movementY += -1;
                     }
         
                     if (Down.IsDown)
                     {
-                        movement += new Vector2(0,+1);
+                        movementY += 1;
                     }
         
                     if (Left.IsDown)
                     {
-                        movement += new Vector2(-1,0);
+                        movementX += -1;
                     }
         
                     if (Right.IsDown)
                     {
-                        movement += new Vector2(1,0);
+                        movementX += 1;
                     }
+
+                    if (camera.Bounds.X+movementX<=0||camera.Bounds.Right+movementX>=Settings.X*Settings.TileSize)
+                    {
+                        return new Vector2(0, 0);
+                    }
+                    if (camera.Bounds.Y+movementY<=0 || camera.Bounds.Bottom+movementY>=Settings.Y*Settings.TileSize)
+                    {
+                        return new Vector2(0, 0);
+                    }
+                    
                     return movement*Settings.CameraMovementSpeed;
                 }
 
@@ -59,12 +71,12 @@ namespace main.Components
                     float zoom = 0;
                     if (OemPlus.IsDown)
                     {
-                        zoom += 1;
+                        zoom += 0.1f;
                     }
 
                     if (OemMinus.IsDown)
                     {
-                        zoom -= 1;
+                        zoom -= 0.1f;
                     }
 
                     return zoom;

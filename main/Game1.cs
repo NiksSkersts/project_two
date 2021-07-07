@@ -26,10 +26,10 @@ namespace main
         private static void Defaults()
         {
             Settings.TileSize = 32;
-            Settings.GridSize = 8; 
-            Settings.SubGridCount = 4;
+            Settings.GridSize = 4; 
+            Settings.SubGridCount = 8;
             Settings.X=Settings.Y  = 32;
-            Settings.CameraMovementSpeed = 100f;
+            Settings.CameraMovementSpeed = 3f;
             Settings.BiomeSize = 32;
 
         }

@@ -1,6 +1,7 @@
 using System;
 using main.Content;
 using main.Map.BuildingBlocks;
+using main.Map.Generation.Arrays;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
@@ -9,21 +10,20 @@ namespace main.Components
 {
     public class MapRenderer : RenderableComponent, IUpdatable
     {
-        private World _world;
+        private Map.BuildingBlocks.Map Map;
         public override float Width => Settings.X*Settings.TileSize;
         public override float Height => Settings.Y*Settings.TileSize;
         public override void Render(Batcher batcher, Camera camera)
         {
-            DrawMap();
+            DrawMapLayer();
         }
-
-        public MapRenderer(World world)
+        public MapRenderer(Map.BuildingBlocks.Map map)
         {
             //todo - make textures have smoother transition on texture borders. e.g: water -> sand.
-            _world = world;
+            Map = map;
         }
 
-        private void DrawMap()
+        private void DrawMapLayer()
         {
             for (int x = 0; x < Settings.X; x++)
             {
@@ -33,12 +33,11 @@ namespace main.Components
                 }
             }
         }
-
         private void Draw(int x, int y)
         {
             // todo recheck the function. Distorted image in result.
             //nvm, my brain died
-            var terrainType = _world.Tiles[x, y].TerrainType;
+            var terrainType = Map.MapLayer.Tiles[x, y].TerrainType;
             switch (terrainType)
             {
                 case TerrainType.None:

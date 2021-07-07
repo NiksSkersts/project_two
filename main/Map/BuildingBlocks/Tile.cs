@@ -12,16 +12,18 @@ namespace main.Map.BuildingBlocks
     public class Tile
     {
         public TerrainType TerrainType;
-        public Tile() : this(TerrainType.None)
+        public Biome Biome;
+        public Neighbours Neighbours;
+        public Tile() : this(TerrainType.None,Biome.None,new Neighbours())
         {
             
         }
 
-        private Tile(TerrainType terrainType)
+        private Tile(TerrainType terrainType,Biome biomes, Neighbours neighbours)
         {
             TerrainType = terrainType;
-            var tileSize = Settings.TileSize;
-            
+            Biome = biomes;
+            Neighbours = neighbours;
         }
     }
 }

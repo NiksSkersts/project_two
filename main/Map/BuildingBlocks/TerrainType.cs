@@ -8,6 +8,7 @@ namespace main.Map.BuildingBlocks
         Water,
         Sand,
         Grass,
-        Mountain
+        Mountain,
+        OutOfBounds
     }
 }

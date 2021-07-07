@@ -1,28 +1,33 @@
 using main.Components;
 using main.Map.BuildingBlocks;
 using main.Map.Generation;
+using main.Map.Generation.Arrays;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.UI;
 
 namespace main.Scenes
 {
+    //Dunno why, but my FPS increased twofold.
+    //Were I over-rendering my scene?
+    //It's plausible.
+    //Var _obj calls render method as well, so it's possible that I kept rendering it two times.
+    //That's the best I can think of, because I just rendered nearly 4 times more rectangles and got twice as much FPS. Fascinating.
     public class Game : BaseScene
     {
-        private World _world;
-        //private Camera _camera;
-        private MapRenderer _map;
+        private Map.BuildingBlocks.Map Map;
         private CameraMovement _cameraMovement;
-        private FollowCamera _cameraf;
         public override void Initialize()
         {
+            var renderer = AddRenderer(new DefaultRenderer());
             base.Initialize();
-            var mapGen = new MapGen();
-            _world = mapGen.Generate(Settings.X, Settings.Y);
-            _map = CreateEntity("map").AddComponent(new MapRenderer(_world));
-            //_camera = CreateEntity("camera").AddComponent(new Camera());
+            Map = new Map.BuildingBlocks.Map();
+            var _obj = CreateEntity("obj").AddComponent(new ObjLayerRenderer(Map));
+            var _map = CreateEntity("map").AddComponent(new MapRenderer(Map));
+            _obj.RenderLayer = 0;
+            _map.RenderLayer = 1;
             _cameraMovement = CreateEntity("character").AddComponent(new CameraMovement());
-            _cameraf = Camera.Entity.AddComponent(new FollowCamera(_cameraMovement.Entity));
+            Camera.Entity.AddComponent(new FollowCamera(_cameraMovement.Entity));
 
         }
         public override void OnStart()
@@ -33,9 +38,6 @@ namespace main.Scenes
 
         public override void Update()
         {
-            Graphics.Instance.Batcher.Begin(Camera.TransformMatrix);
-            _map.Render(Graphics.Instance.Batcher,Camera);
-            Graphics.Instance.Batcher.End();
             _cameraMovement.Entity.Position = _cameraMovement.Movement();
             Camera.ZoomIn(_cameraMovement.Zoom());
             base.Update();

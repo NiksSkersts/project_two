@@ -1,18 +1,19 @@
-namespace main.Map.BuildingBlocks
+using main.Map.BuildingBlocks;
+
+namespace main.Map.Generation.Arrays
 {
-    public class World
+    public class GridArray
     {
-        //Create a simplex height map.
-        //Height map is used to assign terrain types to tiles.
+        //Create an object map.
         private readonly int _x;
         private readonly int _y;
-        public Tile[,] Tiles; //Height map
+        public Object[,] Obj; //Height map
 
-        public World(int x, int y)
+        public GridArray(int x, int y)
         {
             _x = x;
             _y = y;
-            Tiles = new Tile[_x, _y];
+            Obj = new Object[_x, _y];
             SetDefaultMap();
             
         }
@@ -22,7 +23,7 @@ namespace main.Map.BuildingBlocks
             {
                 for (int y = 0; y < _y; y++)
                 {
-                    Tiles[x, y] = new Tile();
+                    Obj[x, y] = new Object();
                 }
             }
         }

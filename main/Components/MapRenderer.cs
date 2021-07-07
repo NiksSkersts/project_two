@@ -5,28 +5,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 
-namespace main.Entities
+namespace main.Components
 {
     public class MapRenderer : RenderableComponent, IUpdatable
     {
         private World _world;
-        public override float Width => Settings.X*Settings.X;
-        public override float Height => Settings.Y*Settings.Y;
+        public override float Width => Settings.X*Settings.TileSize;
+        public override float Height => Settings.Y*Settings.TileSize;
+        public override void Render(Batcher batcher, Camera camera)
+        {
+            DrawMap();
+        }
 
         public MapRenderer(World world)
         {
             //todo - make textures have smoother transition on texture borders. e.g: water -> sand.
             _world = world;
-        }
-
-        public override void Render(Batcher batcher, Camera camera)
-        {
-            //todo - add the darn camera!
-            DrawMap();
-        }
-
-        public void Update()
-        {
         }
 
         private void DrawMap()
@@ -70,6 +64,10 @@ namespace main.Entities
                 Graphics.Instance.Batcher.Draw(texture2D, 
                     new Rectangle(new Point(x*Settings.TileSize,Settings.TileSize*y), new Point(Settings.TileSize,Settings.TileSize)));
             }
+        }
+
+        public void Update()
+        {
         }
     }
 }

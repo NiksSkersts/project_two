@@ -11,6 +11,8 @@ namespace main.Map.Generation
             //todo add two more arrays for objects and (i forgot the second one).
             //Additional arrays will work the same as layers and will be drawn over the first one.
             //gotta implement collision.
+            //todo implement world saving and loading.
+            //Should be easy enough, print the array to a file - json? Will see
             var map = new World(width, height);
             var noiseValues = GenerateNoise(width, height);
 

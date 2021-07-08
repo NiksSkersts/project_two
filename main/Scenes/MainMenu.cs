@@ -1,27 +1,27 @@
 using System;
-using Nez;
-using Nez.UI;
+using System.Reflection.Emit;
+using Microsoft.Xna.Framework;
+using MonoGame.Extended.Screens;
 
 //well, at least menu works as expected.
 namespace main.Scenes
 {
-    public class MainMenu : BaseScene
+    public class MainMenu : GameScreen
     {
         public override void Initialize()
         {
-            SetupBasic();
-            Table.Row().SetPadTop(20);
-            Table.Add(new Label("Main Menu").SetFontScale(5));
-            Table.Row().SetPadTop(20);
-            var button = Table.Add(new TextButton("Play", Skin.CreateDefaultSkin())).SetMinHeight(30).SetFillX().GetElement<TextButton>();
-            button.OnClicked += buttonOnClick_Play;
         }
 
-        private void buttonOnClick_Play(Button obj)
+        public override void Update(GameTime gameTime)
         {
-            Core.Scene = new Game();
         }
 
-        public override Table Table { get; set; }
+        public override void Draw(GameTime gameTime)
+        {
+        }
+
+        public MainMenu(Microsoft.Xna.Framework.Game game) : base(game)
+        {
+        }
     }
 }

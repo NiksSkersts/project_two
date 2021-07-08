@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "main", "main\main.csproj", "{2BDF8C1D-E8B8-4C8D-A6E4-FD195BF7860B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nez", "Nez\Nez.Portable\Nez.csproj", "{4CD2A060-465D-4225-847D-13F66FFECAEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "main", "main\main.csproj", "{6711F6AB-B85F-4F05-B66E-ACA3FCC002D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,13 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2BDF8C1D-E8B8-4C8D-A6E4-FD195BF7860B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BDF8C1D-E8B8-4C8D-A6E4-FD195BF7860B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BDF8C1D-E8B8-4C8D-A6E4-FD195BF7860B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BDF8C1D-E8B8-4C8D-A6E4-FD195BF7860B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4CD2A060-465D-4225-847D-13F66FFECAEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CD2A060-465D-4225-847D-13F66FFECAEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CD2A060-465D-4225-847D-13F66FFECAEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CD2A060-465D-4225-847D-13F66FFECAEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6711F6AB-B85F-4F05-B66E-ACA3FCC002D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6711F6AB-B85F-4F05-B66E-ACA3FCC002D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6711F6AB-B85F-4F05-B66E-ACA3FCC002D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6711F6AB-B85F-4F05-B66E-ACA3FCC002D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

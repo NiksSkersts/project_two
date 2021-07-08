@@ -1,4 +1,4 @@
-namespace main.Map.BuildingBlocks
+namespace main.World.Enum
 {
     public enum Biome
     {

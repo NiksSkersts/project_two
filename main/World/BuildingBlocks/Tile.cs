@@ -1,6 +1,7 @@
 using System.Diagnostics;
+using main.World.Enum;
 
-namespace main.Map.BuildingBlocks
+namespace main.World.BuildingBlocks
 {
     //Basic building block of my map generator.
     [DebuggerDisplay("{" + nameof(TerrainType) + ", nq}")]
@@ -12,18 +13,13 @@ namespace main.Map.BuildingBlocks
     public class Tile
     {
         public TerrainType TerrainType;
-        public Biome Biome;
-        public Neighbours Neighbours;
-        public Tile() : this(TerrainType.None,Biome.None,new Neighbours())
+        public Tile() : this(terrainType: TerrainType.None)
         {
-            
         }
 
-        private Tile(TerrainType terrainType,Biome biomes, Neighbours neighbours)
+        private Tile(TerrainType terrainType)
         {
             TerrainType = terrainType;
-            Biome = biomes;
-            Neighbours = neighbours;
         }
     }
 }

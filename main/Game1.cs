@@ -23,6 +23,7 @@ namespace main
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
         private readonly KeyboardListener _keyboardListener;
+        private ViewportAdapter _viewportAdapter;
 
         public Game1()
         {
@@ -37,8 +38,8 @@ namespace main
         protected override void Initialize()
         {
             Defaults();
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Settings.X*10, Settings.Y*5);
-            _camera = new OrthographicCamera(viewportAdapter);
+            _viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Settings.X*10, Settings.Y*5);
+            _camera = new OrthographicCamera(_viewportAdapter);
             CameraDefaults();
             base.Initialize();
         }
@@ -55,17 +56,15 @@ namespace main
             Components.Add(_screenManager);
             _world = new WorldBuilder()
                 .AddSystem(new CoordinateSystem(_camera))
-                .AddSystem(new MapRenderer(_spriteBatch))
+                .AddSystem(new RenderingSystem(_spriteBatch))
                 .AddSystem(new CameraMovement(_camera))
                 .Build();
         }
         private static void Defaults()
         {
-            Settings.Tiles = 8;
             Settings.Layers = new[] {0, 1};
             Settings.X=Settings.Y  = 32;
             Settings.Z = 1;
-            Settings.ChunkOneSide = 3;
             Settings.CameraMovementSpeed = 3f;
             Settings.BiomeSize = 32;
             Settings.Seed = 1;
@@ -87,6 +86,7 @@ namespace main
         protected override void Draw(GameTime gameTime)
         {
             var transfromMatrix = _camera.GetViewMatrix();
+            _spriteBatch.GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin(transformMatrix:transfromMatrix);
             _world.Draw(gameTime);
             _spriteBatch.End();

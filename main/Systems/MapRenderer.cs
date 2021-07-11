@@ -1,104 +1,65 @@
 using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using main.Content;
-using main.World.BuildingBlocks;
 using main.World.Enum;
+using main.World.Generation;
+using main.World.Structs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Collections;
 using MonoGame.Extended.Entities.Systems;
-using Object = main.World.BuildingBlocks.Object;
 
 namespace main.Systems
 {
     public class MapRenderer : DrawSystem
     {
-        private World.BuildingBlocks.World _world;
         private readonly SpriteBatch _batch;
-
-        public MapRenderer(World.BuildingBlocks.World world, SpriteBatch batch)
+        private readonly ObservableCollection<Tile>[] _tiles;
+        public MapRenderer(SpriteBatch batch)
         {
-            _world = world;
             _batch = batch;
+            _tiles=CoordinateSystem.TilesArray;
             //todo - make textures have smoother transition on texture borders. e.g: water -> sand.
         }
 
 
         public override void Draw(GameTime gameTime)
         {
-            foreach (var Chunkers in _world.Chunks)
+            _batch.GraphicsDevice.Clear(Color.Aqua);
+            foreach (var quadrant in _tiles)
             {
-                CycleThroughChunk(Chunkers);
-            }
-
-            void CycleThroughChunk(Chunkers chunkers)
-            {
-                for (int z = 0; z < Settings.Layers.Length; z++)
+                foreach (var tile in quadrant)
                 {
-                    for (int x = 0; x < Settings.X ; x++)
-                    {
-                        for (int y = 0 ; y < Settings.Y ; y++)
-                        {
-                            if (x>=32 || y>=32 || x<0 || y<0)
-                                return;
-                            ApplyTexturesMapLayer(chunkers.ChunkTiles[x,y],x,y);
-                            ApplyObjLayer(chunkers.ObjArray[x,y],x,y);
-
-                        }
-                    }
-                }
-            }
-            void ApplyTexturesMapLayer(Tile chunkersChunkTile,int x, int y)
-            {
-                var terrainType = chunkersChunkTile.TerrainType;
-                switch (terrainType)
-                {
-                    case TerrainType.None:
-                        break;
-                    case TerrainType.Water:
-                        DrawFunc(Textures.AWaterShallow,x,y);
-                        break;
-                    case TerrainType.Sand:
-                        DrawFunc(Textures.ASand,x,y);
-                        break;
-                    case TerrainType.Grass:
-                        DrawFunc(Textures.AGrass,x,y);
-                        break;
-                    case TerrainType.Mountain:
-                        DrawFunc(Textures.ARock,x,y);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    BeginDraw(tile);
                 }
             }
         }
-        private void DrawFunc(Texture2D texture2D,int x,int y)
-        {
-            _batch.Draw(texture2D, 
-                new Rectangle(new Point(x*Settings.TileSize,Settings.TileSize*y), new Point(Settings.TileSize,Settings.TileSize)),Color.Aqua);
-        }
 
-        private void ApplyObjLayer(Object chunkersObj, int x, int y)
+        private void BeginDraw(Tile tile)
         {
-            var objtype = chunkersObj.ObjectType;
-            Texture2D texture2D = Textures.RectangleH;
-            switch (objtype)
+            switch (tile.TerrainType)
             {
-                case ObjectType.Trees:
+                case TerrainType.Grass:
+                    DrawFunc(Textures.AGrass);
                     break;
-                case ObjectType.Buildings:
+                case TerrainType.Water:
+                    DrawFunc(Textures.AWaterDeep);
                     break;
-                case ObjectType.Grass:
+                case TerrainType.Mountains:
+                    DrawFunc(Textures.ARock);
                     break;
-                case ObjectType.NPC:
-                    break;
-                case ObjectType.Empty:
-                    DrawFunc(texture2D,x,y);
-                    break;
-                case ObjectType.NaturalBlock:
+                case TerrainType.Sand:
+                    DrawFunc(Textures.ASand);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+
+            void DrawFunc(Texture2D texture2D)
+            {
+                _batch.Draw(
+                    texture2D,
+                    new Rectangle(new Point(Settings.X*tile.Coordinates.X,Settings.Y*tile.Coordinates.Y),new Point(Settings.X)),
+                    Color.Aqua);
             }
         }
     }

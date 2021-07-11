@@ -18,7 +18,6 @@ namespace main
     public class Game1 : Game
     {
         private readonly ScreenManager _screenManager;
-        private World.BuildingBlocks.World _worldEnt;
         private MonoGame.Extended.Entities.World _world;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -40,7 +39,6 @@ namespace main
             Defaults();
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Settings.X*10, Settings.Y*5);
             _camera = new OrthographicCamera(viewportAdapter);
-            _worldEnt = new World.BuildingBlocks.World();
             CameraDefaults();
             base.Initialize();
         }
@@ -49,24 +47,28 @@ namespace main
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Textures.LoadTexture2D(Content);
-            ECS();
+            Ecs();
             // TODO: use this.Content to load your game content here
         }
-        private void ECS()
+        private void Ecs()
         {
             Components.Add(_screenManager);
             _world = new WorldBuilder()
-                .AddSystem(new MapRenderer(_worldEnt,_spriteBatch))
+                .AddSystem(new CoordinateSystem(_camera))
+                .AddSystem(new MapRenderer(_spriteBatch))
                 .AddSystem(new CameraMovement(_camera))
                 .Build();
         }
         private static void Defaults()
         {
-            Settings.TileSize = 32;
+            Settings.Tiles = 8;
             Settings.Layers = new[] {0, 1};
             Settings.X=Settings.Y  = 32;
+            Settings.Z = 1;
+            Settings.ChunkOneSide = 3;
             Settings.CameraMovementSpeed = 3f;
             Settings.BiomeSize = 32;
+            Settings.Seed = 1;
 
         }
 
@@ -85,7 +87,6 @@ namespace main
         protected override void Draw(GameTime gameTime)
         {
             var transfromMatrix = _camera.GetViewMatrix();
-            GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin(transformMatrix:transfromMatrix);
             _world.Draw(gameTime);
             _spriteBatch.End();

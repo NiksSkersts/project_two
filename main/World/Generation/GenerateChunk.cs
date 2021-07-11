@@ -1,6 +1,8 @@
+using main.Content;
 using main.World.Enum;
 using main.World.Structs;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Collections;
 using SimplexNoise;
 
@@ -10,22 +12,22 @@ namespace main.World.Generation
     {
         private float _height;
         public Tile Create(Point coords) => new Tile(DetermineTerrain(coords),coords,_height);
-        private TerrainType DetermineTerrain(Point _coords)
+        private Texture2D DetermineTerrain(Point _coords)
         {
             _height = GenerateHeightMap();
             if (_height<=80)
             {
-                return TerrainType.Water;
+                return Textures.AWaterDeep;
             } 
             if (_height<=85)
             {
-                return TerrainType.Sand;
+                return Textures.ASand;
             }
             if (_height>=220)
             {
-                return TerrainType.Mountains;
+                return Textures.ARockHigh;
             }
-            return TerrainType.Grass;
+            return Textures.AGrass;
             
             float GenerateHeightMap()
             {

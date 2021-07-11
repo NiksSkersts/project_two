@@ -1,16 +1,17 @@
 using main.World.Enum;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace main.World.Structs
 {
     public struct Tile
     {
-        public TerrainType TerrainType;
+        public Texture2D Texture;
         public Point Coordinates;
         public float Height;
-        public Tile(TerrainType terrainType, Point coordinates, float height)
+        public Tile(Texture2D texture, Point coordinates, float height)
         {
-            TerrainType = terrainType;
+            Texture = texture;
             Coordinates = coordinates;
             Height = height;
         }

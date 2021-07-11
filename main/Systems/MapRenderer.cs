@@ -36,31 +36,10 @@ namespace main.Systems
 
         private void BeginDraw(Tile tile)
         {
-            switch (tile.TerrainType)
-            {
-                case TerrainType.Grass:
-                    DrawFunc(Textures.AGrass);
-                    break;
-                case TerrainType.Water:
-                    DrawFunc(Textures.AWaterDeep);
-                    break;
-                case TerrainType.Mountains:
-                    DrawFunc(Textures.ARock);
-                    break;
-                case TerrainType.Sand:
-                    DrawFunc(Textures.ASand);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            void DrawFunc(Texture2D texture2D)
-            {
-                _batch.Draw(
-                    texture2D,
+            _batch.Draw(
+                    tile.Texture,
                     new Rectangle(new Point(Settings.X*tile.Coordinates.X,Settings.Y*tile.Coordinates.Y),new Point(Settings.X)),
                     Color.Aqua);
-            }
         }
     }
 }

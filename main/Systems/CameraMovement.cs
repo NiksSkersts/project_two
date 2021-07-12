@@ -21,6 +21,7 @@ namespace main.Systems
 
         public override void Update(GameTime gameTime)
         {
+            _orthographicCamera.Zoom = 0.4f;
             Keys[] currentPressedKeys = Keyboard.GetState().GetPressedKeys();
                 foreach (var key in currentPressedKeys)
                 {
@@ -37,12 +38,6 @@ namespace main.Systems
                             break;
                         case Keys.Right:
                             _orthographicCamera.Move(new Vector2(1, 0));
-                            break;
-                        case Keys.OemPlus:
-                            _orthographicCamera.ZoomIn(0.1f);
-                            break;
-                        case Keys.OemMinus:
-                            _orthographicCamera.ZoomOut(0.1f);
                             break;
                     }
                 }

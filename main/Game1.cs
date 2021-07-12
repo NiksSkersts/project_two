@@ -37,7 +37,6 @@ namespace main
 
         protected override void Initialize()
         {
-            Defaults();
             _viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Settings.X*10, Settings.Y*5);
             _camera = new OrthographicCamera(_viewportAdapter);
             CameraDefaults();
@@ -56,19 +55,9 @@ namespace main
             Components.Add(_screenManager);
             _world = new WorldBuilder()
                 .AddSystem(new CoordinateSystem(_camera))
-                .AddSystem(new RenderingSystem(_spriteBatch))
+                .AddSystem(new RenderingSystem(_spriteBatch,_camera))
                 .AddSystem(new CameraMovement(_camera))
                 .Build();
-        }
-        private static void Defaults()
-        {
-            Settings.Layers = new[] {0, 1};
-            Settings.X=Settings.Y  = 32;
-            Settings.Z = 1;
-            Settings.CameraMovementSpeed = 3f;
-            Settings.BiomeSize = 32;
-            Settings.Seed = 1;
-
         }
 
         private void CameraDefaults()

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Dcrew.Camera;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
@@ -21,7 +22,6 @@ namespace main.Systems
 
         public override void Update(GameTime gameTime)
         {
-            _orthographicCamera.Zoom = 0.4f;
             Keys[] currentPressedKeys = Keyboard.GetState().GetPressedKeys();
                 foreach (var key in currentPressedKeys)
                 {

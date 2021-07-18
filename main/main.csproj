@@ -13,7 +13,6 @@
         <None Remove="Icon.ico" />
         <None Remove="Icon.bmp" />
         <Compile Remove="World\tempcode.cs" />
-        <None Include="World\tempcode.cs" />
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="Icon.ico" />
@@ -26,6 +25,7 @@
         <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Dcrew.Camera" Version="1.5.3" />
         <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
         <PackageReference Include="MonoGame.Extended.Entities" Version="3.8.0" />
         <PackageReference Include="MonoGame.Extended.Input" Version="3.8.0" />

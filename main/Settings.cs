@@ -1,11 +1,12 @@
 namespace main
 {
-    public abstract class Settings
+    public struct Settings
     {
-        public static int X = 32;
-        public static  int Y = 32;
-        public static int RenderSize = 16;
-        public static int[] Layers = new[] {0, 1};
-        public static int Seed = 0;
+        public const int X = 32;
+        public const int Y = 32;
+        public const int RenderSize = X ;
+        public const int Seed = 0;
+        public const int MaxLoadedChunks = 32;
+        public const float Zoom = 0.03f;
     }
 }

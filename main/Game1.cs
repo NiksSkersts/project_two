@@ -1,10 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using Dcrew.Camera;
 using main.Content;
 using main.Scenes;
 using main.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Entities;
 using MonoGame.Extended.Input.InputListeners;
@@ -21,25 +20,24 @@ namespace main
         private MonoGame.Extended.Entities.World _world;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private OrthographicCamera _camera;
         private readonly KeyboardListener _keyboardListener;
-        private ViewportAdapter _viewportAdapter;
+        private OrthographicCamera _camera;
 
         public Game1()
         {
+            
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _screenManager = new ScreenManager();
             _keyboardListener = new KeyboardListener();
             
+
         }
 
         protected override void Initialize()
         {
-            _viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Settings.X*10, Settings.Y*5);
-            _camera = new OrthographicCamera(_viewportAdapter);
-            CameraDefaults();
+            _camera = new OrthographicCamera(_graphics.GraphicsDevice);
             base.Initialize();
         }
 
@@ -54,16 +52,10 @@ namespace main
         {
             Components.Add(_screenManager);
             _world = new WorldBuilder()
-                .AddSystem(new CoordinateSystem(_camera))
+                .AddSystem(new ChunkManager(_camera))
                 .AddSystem(new RenderingSystem(_spriteBatch,_camera))
                 .AddSystem(new CameraMovement(_camera))
                 .Build();
-        }
-
-        private void CameraDefaults()
-        {
-            _camera.Position =Vector2.One;
-            _camera.Zoom = 1f;
         }
 
         protected override void Update(GameTime gameTime)
@@ -74,14 +66,10 @@ namespace main
 
         protected override void Draw(GameTime gameTime)
         {
-            var transfromMatrix = _camera.GetViewMatrix();
             _spriteBatch.GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin(transformMatrix:transfromMatrix);
+            _spriteBatch.Begin(transformMatrix:_camera.GetViewMatrix(new Vector2(Settings.RenderSize)));
             _world.Draw(gameTime);
             _spriteBatch.End();
-            // TODO: Add your drawing code here
-
-            //base.Draw(gameTime);
         }
         private void LoadScreen1()
         {

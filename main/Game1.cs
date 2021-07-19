@@ -29,7 +29,7 @@ namespace main
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _drawManager = new DrawManager(_spriteBatch);
+            _drawManager = new DrawManager(_spriteBatch,_camera);
             _chunkManager = new ChunkManager(_camera);
         }
 

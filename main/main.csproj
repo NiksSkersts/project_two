@@ -24,6 +24,8 @@
         <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Collections" Version="5.0.0" />
+        <PackageReference Include="Collections.Pooled" Version="1.0.82" />
         <PackageReference Include="DefaultEcs" Version="0.16.0" />
         <PackageReference Include="DefaultEcs.Analyzer" Version="0.16.0">
           <PrivateAssets>all</PrivateAssets>

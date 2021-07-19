@@ -20,7 +20,7 @@ namespace main.Systems
         private Vector2 ViewportCenter => new Vector2( ViewportWidth * 0.5f, ViewportHeight * 0.5f );
         public Camera()
         {
-            _zoom = 1f;
+            _zoom = Settings.Zoom;
             Pos = Vector2.Zero;
         }
         // Sets and gets zoom

@@ -12,29 +12,29 @@ namespace main
     {
         private DefaultEcs.World _world = new DefaultEcs.World();
         private readonly Camera _camera = new Camera();
-        private readonly DrawManager _drawManager;
-        private readonly ChunkManager _chunkManager;
-        private readonly SpriteBatch _spriteBatch;
+        private DrawManager _drawManager;
+        private ChunkManager _chunkManager;
+        private SpriteBatch _spriteBatch;
+        GraphicsDeviceManager _graphics;
 
         public Game1()
         {
-            var graphics = new GraphicsDeviceManager(this)
-            {
-                IsFullScreen = false,
-                PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height,
-                PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width
-            };
-
-            graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _drawManager = new DrawManager(_spriteBatch,_camera);
-            _chunkManager = new ChunkManager(_camera);
+            _graphics = new GraphicsDeviceManager(this)
+            {
+                IsFullScreen = false,
+                PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height/4,
+                PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/4,
+                GraphicsProfile = GraphicsProfile.Reach
+            };
         }
 
         protected override void Initialize()
         {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _drawManager = new DrawManager(_spriteBatch,_camera);
+            _chunkManager = new ChunkManager(_camera);
             base.Initialize();
         }
 

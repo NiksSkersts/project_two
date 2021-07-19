@@ -25,8 +25,8 @@ namespace main.World.Structure
         }
         public IEnumerator<Tile<T>> GetEnumerator()
         {
-            for (var x =Width-Settings.X;x< Width;x++)
-            for (var y = Height-Settings.Y; y < Height; y++)
+            for (var x =Width-Settings.RenderSize/2;x< Width+Settings.RenderSize/2;x++)
+            for (var y = Height-Settings.RenderSize/2; y < Height+Settings.RenderSize/2; y++)
             {
                 yield return new Tile<T>(x, y, this);
             }
@@ -59,7 +59,7 @@ namespace main.World.Structure
         private static float DetermineHeight(int x, int y)
         {
             Noise.Seed = Settings.Seed;
-            return Noise.CalcPixel2D(x,y,0.005f);
+            return Noise.CalcPixel2D(x,y,0.001f);
         }
 
         private static Texture2D DetermineTerrain(float height)

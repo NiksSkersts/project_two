@@ -12,7 +12,6 @@
     <ItemGroup>
         <None Remove="Icon.ico" />
         <None Remove="Icon.bmp" />
-        <Compile Remove="World\tempcode.cs" />
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="Icon.ico" />
@@ -25,18 +24,16 @@
         <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Dcrew.Camera" Version="1.5.3" />
-        <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
-        <PackageReference Include="MonoGame.Extended.Entities" Version="3.8.0" />
-        <PackageReference Include="MonoGame.Extended.Input" Version="3.8.0" />
-        <PackageReference Include="MonoGame.Extended.SceneGraphs" Version="3.8.0" />
+        <PackageReference Include="DefaultEcs" Version="0.16.0" />
+        <PackageReference Include="DefaultEcs.Analyzer" Version="0.16.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
         <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
-        <PackageReference Include="SD.Tools.Algorithmia" Version="1.4.0" />
         <PackageReference Include="SimplexNoise" Version="2.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <Compile Remove="Map\tempcode.cs" />
-      <Compile Remove="Systems\ObjLayerRenderer.cs" />
+      <Folder Include="World" />
     </ItemGroup>
 </Project>

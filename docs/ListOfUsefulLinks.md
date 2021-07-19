@@ -10,3 +10,6 @@
 [Procedural World]
 - [Procedural Generation (Part I)](https://lukehollenback.itch.io/firetale/devlog/221388/procedural-generation-part-i)
 - [Procedural Generation (Part II)](https://lukehollenback.itch.io/firetale/devlog/222825/procedural-generation-part-ii)
+
+[Camera]
+- [Creating a 2D camera](https://roguesharp.wordpress.com/2014/07/13/tutorial-5-creating-a-2d-camera-with-pan-and-zoom-in-monogame/)

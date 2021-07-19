@@ -7,6 +7,6 @@ namespace main
         public const int RenderSize = X ;
         public const int Seed = 0;
         public const int MaxLoadedChunks = 32;
-        public const float Zoom = 0.03f;
+        //public const float Zoom = 0.01f;
     }
 }

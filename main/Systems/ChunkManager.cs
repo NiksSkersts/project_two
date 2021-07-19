@@ -1,27 +1,27 @@
-using System;
-using Dcrew.Camera;
+using DefaultEcs.System;
 using main.World.Structure;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
-using MonoGame.Extended.Entities.Systems;
 
 namespace main.Systems
 {
-    public class ChunkManager : UpdateSystem
+    public class ChunkManager : ISystem<int>
     {
-        private readonly OrthographicCamera _camera;
-        private readonly ChunkMap _chunkMap;
-        public ChunkManager(OrthographicCamera camera)
+        private readonly Camera _camera;
+
+        public ChunkManager(Camera camera)
         {
-            this._camera = camera;
-            _camera.Zoom = Settings.Zoom;
-            _chunkMap = new ChunkMap();
-            
+            _camera = camera;
         }
-        public override void Update(GameTime gameTime)
+
+        public void Dispose()
         {
-            _chunkMap.Enque((int)_camera.Position.X,(int)_camera.Position.Y);
-            Console.WriteLine(_camera.Position);
         }
+
+        public void Update(int state)
+        {
+            ChunkMap.Enque(new Vector2(_camera.Pos.X/Settings.X,_camera.Pos.Y/Settings.Y));
+        }
+
+        public bool IsEnabled { get; set; }
     }
 }

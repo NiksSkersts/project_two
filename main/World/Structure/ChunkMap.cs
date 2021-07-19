@@ -2,40 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace main.World.Structure
 {
     public class ChunkMap : IDisposable
     {
-        public static SortedList<(int x,int y),Chunk<object>> Map { get; private set; }
-        public struct Chunk
+        public static SortedList<(int x, int y), Chunk<object>> Map { get; private set; } =
+            new SortedList<(int x, int y), Chunk<object>>();
+        public static void Enque(Vector2 Pos)
         {
-            // Index into Chunks for chunk to the left
-            public int Left;
-            // Index into Chunks for chunk to the top
-            public int Top;
-            // Index into Chunks for chunk to the right
-            public int Right;
-            // Index into Chunks for chunk to the bottom
-            public int Bottom;
-        }
-
-        public ChunkMap()
-        {
-            Map = new SortedList<(int x, int y), Chunk<object>>();
-        }
-
-        public void Enque(int posX, int posY)
-        {
-            var newx = (posX / Settings.X) * Settings.X;
-            var newy = (posY / Settings.Y) * Settings.Y;
-            if (Map.ContainsKey((newx,newy))==false)
+            var newposx =(int) (Pos.X / Settings.X) * Settings.X;
+            var newposy =(int) (Pos.Y / Settings.Y) * Settings.Y;
+            if (Map.ContainsKey((newposx,newposy))==false)
             {
-                Map.Add((newx,newy),new Chunk<object>(newx,newy));
+                Map.Add((newposx,newposy),new Chunk<object>(newposx,newposy));
             }
             
         }
-
         public void Dispose()
         {
             throw new NotImplementedException();

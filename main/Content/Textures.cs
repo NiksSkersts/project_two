@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
-using MonoGame.Extended.Content;
 
 namespace main.Content
 {
@@ -21,7 +19,6 @@ namespace main.Content
              ASwamp= contentManager.Load<Texture2D>("Artsy/noisy-swamp");
              AWaterDeep= contentManager.Load<Texture2D>("Artsy/noisy-waterdeep");
              AWaterShallow= contentManager.Load<Texture2D>("Artsy/noisy-watershallow");
-             RectangleH = new Texture2D(contentManager.GetGraphicsDevice(), Settings.X, Settings.Y);
         }
         public static Texture2D RectangleH { get; set; }
         public static Texture2D AWaterShallow { get; set; }

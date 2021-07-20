@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using main.World.Enum;
 
 namespace main.World.Structure
 {
@@ -7,6 +8,7 @@ namespace main.World.Structure
     {
         private int Width { get; }
         private int Height { get; }
+        public int Count { get; }
         private readonly T[,] _map;
         public Chunk(int height, int width )
         {
@@ -17,23 +19,17 @@ namespace main.World.Structure
 
         public T this[int x, int y]
         {
-            get => this._map[x, y];
-            set => this._map[x, y] = value;
+            get => _map[x, y];
+            set => _map[x, y] = value;
         }
         public IEnumerator<Tile<T>> GetEnumerator()
         {
             for (var x =Width-Settings.RenderSize/2;x< Width+Settings.RenderSize/2;x++)
             for (var y = Height-Settings.RenderSize/2; y < Height+Settings.RenderSize/2; y++)
             {
-                yield return new Tile<T>(x, y, this);
+                yield return new Tile<T>(x, y);
             }
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public int Count { get; }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

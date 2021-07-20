@@ -8,9 +8,12 @@ namespace main.Systems
 {
     public class Camera : ISystem<float>
     {
-        private float _zoom; // Camera Zoom
-        public Matrix Transform; // Matrix Transform
-        public Vector2 Pos; // Camera Position
+        // Camera Zoom
+        private float _zoom; 
+        public Matrix Transform; 
+        // Matrix Transform
+        public Vector2 Pos; 
+        // Camera Position
         public bool IsEnabled { get; set; }
 
         // Height and width of the viewport window which we need to adjust
@@ -28,7 +31,11 @@ namespace main.Systems
         {
             // Negative zoom will flip image. Zoom  Disabled.
             get => _zoom;
-            set { _zoom = _zoom; if (_zoom < 0.1f) _zoom = 0.1f; } 
+            set
+            {
+                _zoom = value;
+                if (_zoom < 0.1f) _zoom = 0.1f;
+            } 
         }
         // Get set position
         private Vector2 Position
@@ -54,22 +61,16 @@ namespace main.Systems
                 switch (key)
                 {
                     case Keys.Up:
-                        Pos -= Vector2.UnitY*100;
+                        Pos -= Vector2.UnitY*Settings.MovementAccel;
                         break;
                     case Keys.Down:
-                        Pos += Vector2.UnitY*100;
+                        Pos += Vector2.UnitY*Settings.MovementAccel;
                         break;
                     case Keys.Left:
-                        Pos -= Vector2.UnitX*100;
+                        Pos -= Vector2.UnitX*Settings.MovementAccel;
                         break;
                     case Keys.Right:
-                        Pos += Vector2.UnitX*100;
-                        break;
-                    case Keys.OemPlus:
-                        Zoom += 0.5f;
-                        break;
-                    case Keys.OemMinus:
-                        Zoom -= 0.5f;
+                        Pos += Vector2.UnitX*Settings.MovementAccel;
                         break;
                 }
             }

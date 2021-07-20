@@ -21,9 +21,9 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
         <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641" />
         <PackageReference Include="SimplexNoise" Version="2.0.0" />
-        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
     </ItemGroup>
     <ItemGroup>
       <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-grass.png" />

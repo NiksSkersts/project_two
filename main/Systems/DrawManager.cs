@@ -11,10 +11,11 @@ namespace main.Systems
 {
     public class DrawManager : ISystem<int>
     {
+        public bool IsEnabled { get; set; }
         private readonly SpriteBatch _spriteBatch;
         private readonly Camera _camera;
-        private PooledQueue<Chunk<object>> PooledQueue = new PooledQueue<Chunk<object>>(Settings.MaxLoadedChunks);
-        private PooledQueue<(int x, int y)> Keys = new PooledQueue<(int x, int y)>(Settings.MaxLoadedChunks);
+        private readonly PooledQueue<Chunk<object>> _pooledQueue = new PooledQueue<Chunk<object>>(Settings.MaxLoadedChunks);
+        private readonly PooledQueue<(int x, int y)> _keys = new PooledQueue<(int x, int y)>(Settings.MaxLoadedChunks);
 
         public DrawManager(SpriteBatch spriteBatch, Camera camera)
         {
@@ -28,25 +29,14 @@ namespace main.Systems
 
         public void Update(int state)
         {
+            #region Debug
             // foreach (var tile in ChunkMap.Map.SelectMany(chunk => chunk.Value))
             // {
             //     _spriteBatch.Draw(
             //         tile.Terrain,
-            //         new Vector2(tile.X*Settings.RenderSize,tile.Y*Settings.RenderSize),
+            //         new Vector2(tile.X * Settings.RenderSize, tile.Y * Settings.RenderSize),
             //         Color.White);
             // }
-            var newposx =(int) ((_camera.Pos.X/Settings.X) / Settings.X) * Settings.X;
-            var newposy =(int) ((_camera.Pos.Y)/Settings.Y / Settings.Y) * Settings.Y;
-            
-            for (int i = -32+(newposx); i <= 32+(newposx); i += 32)
-            {
-                for (int j = -32+(newposy); j <= 32+(newposy); j +=32)
-                {
-                    if (Keys.Contains((i, j)) != false) continue;
-                    PooledQueue.Enqueue(ChunkMap.Map.Single(p=>p.Key == (i,j)).Value);
-                    Keys.Enqueue(ChunkMap.Map.Single(p=>p.Key == (i,j)).Key);
-                }
-            }
             // foreach (var t in ChunkMap.Map.Where(pair => pair.Key == (newposx,newposy)).Select(p=>p))
             // {
             //     if (Keys.Contains((newposx,newposy))==false)
@@ -55,24 +45,32 @@ namespace main.Systems
             //         Keys.Enqueue(t.Key);
             //     }
             // }
-            foreach (var chunk in PooledQueue.AsEnumerable())
+            #endregion
+            var newposx = (int) ((_camera.Pos.X / Settings.X) / Settings.X) * Settings.X;
+            var newposy = (int) ((_camera.Pos.Y) / Settings.Y / Settings.Y) * Settings.Y;
+            for (var i = -32 + (newposx); i <= 32 + (newposx); i += 32)
             {
-                foreach (var tile in chunk)
+                for (var j = -32 + (newposy); j <= 32 + (newposy); j += 32)
                 {
-                    _spriteBatch.Draw(
-                        tile.Terrain,
-                        new Vector2(tile.X*Settings.RenderSize,tile.Y*Settings.RenderSize),
-                        Color.White);
+                    if (_keys.Contains((i, j)) != false) continue;
+                    _pooledQueue.Enqueue(ChunkMap.Map.Single(p => p.Key == (i, j)).Value);
+                    _keys.Enqueue(ChunkMap.Map.Single(p => p.Key == (i, j)).Key);
                 }
             }
 
-            if (PooledQueue.Count>Settings.MaxLoadedChunks)
+            if (_pooledQueue == null) return;
+            foreach (var chunk in _pooledQueue.AsEnumerable())
             {
-                PooledQueue.Dequeue();
-                Keys.Dequeue();
+                foreach (var tile in chunk)
+                {
+                    _spriteBatch.Draw(tile.Terrain,
+                        new Vector2(tile.X * Settings.RenderSize, tile.Y * Settings.RenderSize), Color.White);
+                }
             }
-        }
 
-        public bool IsEnabled { get; set; }
+            if (_pooledQueue.Count <= Settings.MaxLoadedChunks) return;
+            _pooledQueue.Dequeue();
+            _keys.Dequeue();
+        }
     }
 }

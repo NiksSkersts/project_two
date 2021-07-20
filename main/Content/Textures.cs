@@ -20,7 +20,6 @@ namespace main.Content
              AWaterDeep= contentManager.Load<Texture2D>("Artsy\\noisy-waterdeep");
              AWaterShallow= contentManager.Load<Texture2D>("Artsy\\noisy-watershallow");
         }
-        public static Texture2D RectangleH { get; set; }
         public static Texture2D AWaterShallow { get; set; }
 
         public static Texture2D AWaterDeep { get; set; }

@@ -18,21 +18,18 @@ namespace main.World.Structure
             // {
             //     Map.Add((newposx,newposy),new Chunk<object>(newposx,newposy));
             // }
-            for (int i = -32+(newposx); i <= 32+(newposx); i += 32)
+            for (var i = -32+(newposx); i <= 32+(newposx); i += 32)
             {
-                for (int j = -32+(newposy); j <= 32+(newposy); j +=32)
+                for (var j = -32+(newposy); j <= 32+(newposy); j +=32)
                 {
-                    if (Map.ContainsKey((i, j)) == false)
-                    {
-                        Map.Add((i, j), new Chunk<object>(i, j));
-                    }
+                    if (Map.ContainsKey((i, j)) != false) continue;
+                    Map.Add((i, j), new Chunk<object>(i, j));
                 }
             }
             
         }
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
     }
 }

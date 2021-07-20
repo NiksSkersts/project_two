@@ -15,7 +15,7 @@ namespace main
         private DrawManager _drawManager;
         private ChunkManager _chunkManager;
         private SpriteBatch _spriteBatch;
-        GraphicsDeviceManager _graphics;
+        private GraphicsDeviceManager _graphics;
 
         public Game1()
         {
@@ -24,8 +24,8 @@ namespace main
             _graphics = new GraphicsDeviceManager(this)
             {
                 IsFullScreen = false,
-                PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height/4,
-                PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/4,
+                PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2,
+                PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height/2,
                 GraphicsProfile = GraphicsProfile.Reach
             };
         }

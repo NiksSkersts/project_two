@@ -14,9 +14,19 @@ namespace main.World.Structure
         {
             var newposx =(int) (Pos.X / Settings.X) * Settings.X;
             var newposy =(int) (Pos.Y / Settings.Y) * Settings.Y;
-            if (Map.ContainsKey((newposx,newposy))==false)
+            // if (Map.ContainsKey((newposx,newposy))==false)
+            // {
+            //     Map.Add((newposx,newposy),new Chunk<object>(newposx,newposy));
+            // }
+            for (int i = -32+(newposx); i <= 32+(newposx); i += 32)
             {
-                Map.Add((newposx,newposy),new Chunk<object>(newposx,newposy));
+                for (int j = -32+(newposy); j <= 32+(newposy); j +=32)
+                {
+                    if (Map.ContainsKey((i, j)) == false)
+                    {
+                        Map.Add((i, j), new Chunk<object>(i, j));
+                    }
+                }
             }
             
         }

@@ -1,25 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <PublishReadyToRun>false</PublishReadyToRun>
         <TieredCompilation>false</TieredCompilation>
+        <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
     <PropertyGroup>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>Icon.ico</ApplicationIcon>
     </PropertyGroup>
-    <ItemGroup>
-        <None Remove="Icon.ico" />
-        <None Remove="Icon.bmp" />
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Icon.ico" />
-        <EmbeddedResource Include="Icon.bmp" />
-    </ItemGroup>
-    <ItemGroup>
-        <MonoGameContentReference Include="Content\Content.mgcb" />
-    </ItemGroup>
     <ItemGroup>
         <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
     </ItemGroup>
@@ -31,11 +21,75 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
-        <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
+        <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641" />
         <PackageReference Include="SimplexNoise" Version="2.0.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="World" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-grass.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-grass.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-grounddark.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-grounddark.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-lava.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-lava.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-rock.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-rock.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-rockhigh.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-rockhigh.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-sand.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-sand.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-sandwhite.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-sandwhite.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-swamp.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-swamp.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-waterdeep.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-waterdeep.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-watershallow.png" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\Artsy\noisy-watershallow.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-grass.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-grounddark.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-lava.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-rock.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-rockhigh.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-sand.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-sandwhite.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-swamp.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-waterdeep.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Artsy\noisy-watershallow.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-grass.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-grounddark.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-lava.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-rock.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-rockhigh.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-sand.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-sandwhite.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-swamp.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-waterdeep.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\bin\Windows\Content\Artsy\noisy-watershallow.xnb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\main.mgcb" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\.mgstats" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-grass.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-grounddark.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-lava.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-rock.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-rockhigh.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-sand.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-sandwhite.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-swamp.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-waterdeep.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Artsy\noisy-watershallow.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\DesktopGL\.mgstats" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\.mgstats" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-grass.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-grounddark.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-lava.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-rock.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-rockhigh.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-sand.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-sandwhite.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-swamp.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-waterdeep.mgcontent" />
+      <None Include="bin\Debug\netcoreapp3.1\Content\obj\Windows\Content\Artsy\noisy-watershallow.mgcontent" />
     </ItemGroup>
 </Project>

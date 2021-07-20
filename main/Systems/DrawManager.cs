@@ -28,16 +28,33 @@ namespace main.Systems
 
         public void Update(int state)
         {
+            // foreach (var tile in ChunkMap.Map.SelectMany(chunk => chunk.Value))
+            // {
+            //     _spriteBatch.Draw(
+            //         tile.Terrain,
+            //         new Vector2(tile.X*Settings.RenderSize,tile.Y*Settings.RenderSize),
+            //         Color.White);
+            // }
             var newposx =(int) ((_camera.Pos.X/Settings.X) / Settings.X) * Settings.X;
             var newposy =(int) ((_camera.Pos.Y)/Settings.Y / Settings.Y) * Settings.Y;
-            foreach (var t in ChunkMap.Map.Where(pair => pair.Key == (newposx,newposy)).Select(p=>p))
+            
+            for (int i = -32+(newposx); i <= 32+(newposx); i += 32)
             {
-                if (Keys.Contains((newposx,newposy))==false)
+                for (int j = -32+(newposy); j <= 32+(newposy); j +=32)
                 {
-                    PooledQueue.Enqueue(t.Value);
-                    Keys.Enqueue(t.Key);
+                    if (Keys.Contains((i, j)) != false) continue;
+                    PooledQueue.Enqueue(ChunkMap.Map.Single(p=>p.Key == (i,j)).Value);
+                    Keys.Enqueue(ChunkMap.Map.Single(p=>p.Key == (i,j)).Key);
                 }
             }
+            // foreach (var t in ChunkMap.Map.Where(pair => pair.Key == (newposx,newposy)).Select(p=>p))
+            // {
+            //     if (Keys.Contains((newposx,newposy))==false)
+            //     {
+            //         PooledQueue.Enqueue(t.Value);
+            //         Keys.Enqueue(t.Key);
+            //     }
+            // }
             foreach (var chunk in PooledQueue.AsEnumerable())
             {
                 foreach (var tile in chunk)

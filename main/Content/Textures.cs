@@ -9,16 +9,16 @@ namespace main.Content
         //todo add other textures!
         public static void LoadTexture2D(ContentManager contentManager)
         {
-            AGrass= contentManager.Load<Texture2D>("Artsy/noisy-grass");
-             AGroundDark= contentManager.Load<Texture2D>("Artsy/noisy-grounddark");
-             ALava= contentManager.Load<Texture2D>("Artsy/noisy-lava");
-             ARock= contentManager.Load<Texture2D>("Artsy/noisy-rock");
-             ARockHigh= contentManager.Load<Texture2D>("Artsy/noisy-rockhigh");
-             ASand= contentManager.Load<Texture2D>("Artsy/noisy-sand");
-             ASandWhite= contentManager.Load<Texture2D>("Artsy/noisy-sandwhite");
-             ASwamp= contentManager.Load<Texture2D>("Artsy/noisy-swamp");
-             AWaterDeep= contentManager.Load<Texture2D>("Artsy/noisy-waterdeep");
-             AWaterShallow= contentManager.Load<Texture2D>("Artsy/noisy-watershallow");
+            AGrass= contentManager.Load<Texture2D>("Artsy\\noisy-grass");
+             AGroundDark= contentManager.Load<Texture2D>("Artsy\\noisy-grounddark");
+             ALava= contentManager.Load<Texture2D>("Artsy\\noisy-lava");
+             ARock= contentManager.Load<Texture2D>("Artsy\\noisy-rock");
+             ARockHigh= contentManager.Load<Texture2D>("Artsy\\noisy-rockhigh");
+             ASand= contentManager.Load<Texture2D>("Artsy\\noisy-sand");
+             ASandWhite= contentManager.Load<Texture2D>("Artsy\\noisy-sandwhite");
+             ASwamp= contentManager.Load<Texture2D>("Artsy\\noisy-swamp");
+             AWaterDeep= contentManager.Load<Texture2D>("Artsy\\noisy-waterdeep");
+             AWaterShallow= contentManager.Load<Texture2D>("Artsy\\noisy-watershallow");
         }
         public static Texture2D RectangleH { get; set; }
         public static Texture2D AWaterShallow { get; set; }

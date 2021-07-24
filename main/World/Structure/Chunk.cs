@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using main.World.Enum;
 
 namespace main.World.Structure
 {
     public class Chunk<T> : IReadOnlyCollection<Tile<T>>
     {
-        private int Width { get; }
-        private int Height { get; }
+        public int Width { get; }
+        public int Height { get; }
         public int Count { get; }
         private readonly T[,] _map;
         public Chunk(int height, int width )
@@ -30,6 +31,7 @@ namespace main.World.Structure
                 yield return new Tile<T>(x, y);
             }
         }
+
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

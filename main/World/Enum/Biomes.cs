@@ -6,6 +6,7 @@
         DeepWater,
         Water,
         Grassland,
+        Savanna,
         Beach,
         Desert,
         Mountains,

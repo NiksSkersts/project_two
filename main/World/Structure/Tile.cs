@@ -6,17 +6,18 @@ using SimplexNoise;
 
 namespace main.World.Structure
 {
-    public readonly struct Tile<T>
+    public class Tile<T>
     {
         public int X { get; }
         public int Y { get; }
-        public Texture2D Terrain { get; }
+        public Texture Terrain { get; }
         private int Temperature { get; }
         private int Humidity { get; }
         private float Height { get; }
         private Biomes Biome { get; }
+        public Neighbours Neighbours { get; set; }
 
-        public Tile(int y, int x) : this()
+        public Tile(int y, int x)
         {
             Y = y;
             X = x;
@@ -25,6 +26,54 @@ namespace main.World.Structure
             Humidity = DetermineHumidity(Height, Temperature);
             Biome = DetermineBiome(Height, Temperature, Humidity);
             Terrain = DetermineTerrain(Height, Biome);
+            Neighbours = DetermineNeighbours(x,y);
+        }
+
+        private Neighbours DetermineNeighbours(int x, int y)
+        {
+            var neigh = new Neighbours();
+            for (var i = x - 1; i < x + 1; i++)
+            for (var j = y - 1; j < y + 1; j++)
+            {
+                var height = DetermineHeight(i, j);
+                var temp = DetermineTemperature(height);
+                var humidity = DetermineHumidity(height, temp);
+                var biome = DetermineBiome(height,temp,humidity);
+                if (i == x - 1 && j == y + 1)
+                {
+                    neigh.Q1 = DetermineTerrain(height,biome);
+                }
+                else if (i == x && j == y + 1)
+                {
+                    neigh.Q2 = DetermineTerrain(height,biome);
+                }
+                else if (i == x + 1 && j == y + 1)
+                {
+                    neigh.Q3 = DetermineTerrain(height,biome);
+                }
+                else if (i == x - 1 && j == y)
+                {
+                    neigh.Q4 = DetermineTerrain(height,biome);
+                }
+                else if (i == x + 1 && j == y)
+                {
+                    neigh.Q6 = DetermineTerrain(height,biome);
+                }
+                else if (i == x - 1 && j == y - 1)
+                {
+                    neigh.Q7 = DetermineTerrain(height,biome);
+                }
+                else if (i == x && j == y - 1)
+                {
+                    neigh.Q8 = DetermineTerrain(height,biome);
+                }
+                else if (i == x + 1 && j == y - 1)
+                {
+                    neigh.Q9 = DetermineTerrain(height,biome);
+                }
+            }
+
+            return neigh;
         }
 
         private static int DetermineTemperature(float determineHeight) => (int) (Settings.MaxTemp * Math.Sin(Settings.Period * determineHeight));
@@ -41,25 +90,27 @@ namespace main.World.Structure
             if (temperature >= 25 && humidity < 5) return Biomes.Desert;
             if (temperature < 30 && height <= 50) return Biomes.Water;
             if (temperature < 15 && height <= 10) return Biomes.DeepWater;
+            if (temperature <= 40 && temperature >= 10 && humidity > 50) return Biomes.Savanna;
             if (temperature <= 40 && temperature >= 10 && humidity > 5) return Biomes.Grassland;
             if (temperature < 10 && temperature >= 0) return Biomes.Hills;
             if (height > 100 && temperature < 0) return Biomes.Mountains;
             return Biomes.Mountains;
         }
 
-        private static Texture2D DetermineTerrain(float height, Biomes biomes) =>
+        private static Texture DetermineTerrain(float height, Biomes biomes) =>
             biomes switch
             {
-                Biomes.Desert => Textures.ASand,
-                Biomes.DeepWater => Textures.AWaterDeep,
-                Biomes.Water => Textures.AWaterShallow,
-                Biomes.Grassland => Textures.AGrass,
-                Biomes.Beach => Textures.ASandWhite,
-                Biomes.Mountains => Textures.ARockHigh,
-                Biomes.Swamp => Textures.AGroundDark,
+                Biomes.Desert => Texture.Sand,
+                Biomes.DeepWater => Texture.WaterDeep,
+                Biomes.Water => Texture.Water,
+                Biomes.Grassland => Texture.Grass,
+                Biomes.Beach => Texture.Sand,
+                Biomes.Mountains => Texture.Mountain,
+                Biomes.Swamp => Texture.Swamp,
+                Biomes.Savanna => Texture.GrassSavana,
                 Biomes.Forest => default,
                 Biomes.Jungle => default,
-                Biomes.Hills => Textures.ARock,
+                Biomes.Hills => Texture.Hill,
                 _ => throw new ArgumentOutOfRangeException(nameof(biomes), biomes, null)
             };
 

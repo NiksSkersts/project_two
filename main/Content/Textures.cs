@@ -18,9 +18,16 @@ namespace main.Content
              ASandWhite= contentManager.Load<Texture2D>("Artsy\\noisy-sandwhite");
              ASwamp= contentManager.Load<Texture2D>("Artsy\\noisy-swamp");
              AWaterDeep= contentManager.Load<Texture2D>("Artsy\\noisy-waterdeep");
-             AWaterShallow= contentManager.Load<Texture2D>("Artsy\\noisy-watershallow");
+             Water= contentManager.Load<Texture2D>("Artsy\\water");
+             //New Textures
+             Grass= contentManager.Load<Texture2D>("Artsy\\grass");
+             GrassS= contentManager.Load<Texture2D>("Artsy\\grass_s");
         }
-        public static Texture2D AWaterShallow { get; set; }
+
+        public static Texture2D Grass { get; set; }
+        public static Texture2D GrassS { get; set; }
+
+        public static Texture2D Water { get; set; }
 
         public static Texture2D AWaterDeep { get; set; }
 

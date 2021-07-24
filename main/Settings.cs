@@ -8,7 +8,7 @@ namespace main
         public const int RenderSize = X ;
         public const int Seed = 0;
         public const int MaxLoadedChunks = 9;
-        public const float Zoom = 1.5f;
+        public const float Zoom = 2f;
         public const int MaxHeight = 255;
         //Max height is set by SimplexNoise
         #endregion

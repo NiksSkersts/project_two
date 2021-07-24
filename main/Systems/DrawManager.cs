@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Collections.Pooled;
 using DefaultEcs.System;
+using main.Content;
 using main.World.Structure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Texture = main.World.Structure.Texture;
 
 namespace main.Systems
 {
@@ -14,8 +18,8 @@ namespace main.Systems
         public bool IsEnabled { get; set; }
         private readonly SpriteBatch _spriteBatch;
         private readonly Camera _camera;
-        private readonly PooledQueue<Chunk<object>> _pooledQueue = new PooledQueue<Chunk<object>>(Settings.MaxLoadedChunks);
-        private readonly PooledQueue<(int x, int y)> _keys = new PooledQueue<(int x, int y)>(Settings.MaxLoadedChunks);
+        private readonly SortedList<(int x, int y), Chunk<object>> _chunks =
+            new SortedList<(int x, int y), Chunk<object>>(Settings.MaxLoadedChunks);
 
         public DrawManager(SpriteBatch spriteBatch, Camera camera)
         {
@@ -30,47 +34,69 @@ namespace main.Systems
         public void Update(int state)
         {
             #region Debug
-            // foreach (var tile in ChunkMap.Map.SelectMany(chunk => chunk.Value))
-            // {
-            //     _spriteBatch.Draw(
-            //         tile.Terrain,
-            //         new Vector2(tile.X * Settings.RenderSize, tile.Y * Settings.RenderSize),
-            //         Color.White);
-            // }
-            // foreach (var t in ChunkMap.Map.Where(pair => pair.Key == (newposx,newposy)).Select(p=>p))
-            // {
-            //     if (Keys.Contains((newposx,newposy))==false)
-            //     {
-            //         PooledQueue.Enqueue(t.Value);
-            //         Keys.Enqueue(t.Key);
-            //     }
-            // }
+
             #endregion
+
             var newposx = (int) ((_camera.Pos.X / Settings.X) / Settings.X) * Settings.X;
             var newposy = (int) ((_camera.Pos.Y) / Settings.Y / Settings.Y) * Settings.Y;
             for (var i = -32 + (newposx); i <= 32 + (newposx); i += 32)
             {
                 for (var j = -32 + (newposy); j <= 32 + (newposy); j += 32)
                 {
-                    if (_keys.Contains((i, j)) != false) continue;
-                    _pooledQueue.Enqueue(ChunkMap.Map.Single(p => p.Key == (i, j)).Value);
-                    _keys.Enqueue(ChunkMap.Map.Single(p => p.Key == (i, j)).Key);
+                    if (_chunks.ContainsKey((i, j)) != false) continue;
+                    _chunks.Add((i, j), ChunkMap.Map.Single(p => p.Key == (i, j)).Value);
                 }
             }
 
-            if (_pooledQueue == null) return;
-            foreach (var chunk in _pooledQueue.AsEnumerable())
+            if (_chunks == null) return;
+            foreach (var chunk in _chunks.AsEnumerable())
             {
-                foreach (var tile in chunk)
+                foreach (var tile in chunk.Value)
                 {
-                    _spriteBatch.Draw(tile.Terrain,
-                        new Vector2(tile.X * Settings.RenderSize, tile.Y * Settings.RenderSize), Color.White);
+                    switch (tile.Terrain)
+                    {
+                        case Texture.GrassSavana:
+                            Render(Textures.GrassS, tile);
+                            break;
+                        case Texture.Grass:
+                            Render(Textures.Grass, tile);
+                            break;
+                        case Texture.Water:
+                            Render(Textures.Water, tile);
+                            break;
+                        case Texture.WaterDeep:
+                            Render(Textures.AWaterDeep, tile);
+                            break;
+                        case Texture.Hill:
+                            Render(Textures.ARock, tile);
+                            break;
+                        case Texture.Mountain:
+                            Render(Textures.ARockHigh, tile);
+                            break;
+                        case Texture.Sand:
+                            Render(Textures.ASand, tile);
+                            break;
+                        case Texture.Swamp:
+                            Render(Textures.ASwamp, tile);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 }
             }
 
-            if (_pooledQueue.Count <= Settings.MaxLoadedChunks) return;
-            _pooledQueue.Dequeue();
-            _keys.Dequeue();
+            while (_chunks.Count > Settings.MaxLoadedChunks)
+            {
+                _chunks.RemoveAt(0);
+            }
+        }
+
+        private void Render<T>(Texture2D texture, Tile<T> tile)
+        {
+            _spriteBatch.Draw(
+                texture,
+                new Vector2(tile.X * Settings.X, tile.Y * Settings.Y),
+                color: Color.White);
         }
     }
 }

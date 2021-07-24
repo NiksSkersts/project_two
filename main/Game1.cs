@@ -5,6 +5,7 @@ using main.World.Structure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Texture = main.World.Structure.Texture;
 
 namespace main
 {
@@ -55,7 +56,7 @@ namespace main
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin(transformMatrix: _camera.TranslationMatrix);
+            _spriteBatch.Begin(transformMatrix: _camera.TranslationMatrix, sortMode: SpriteSortMode.BackToFront,samplerState: SamplerState.PointClamp);
             _drawManager.Update(1);
             _spriteBatch.End();
 

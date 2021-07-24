@@ -5,14 +5,14 @@
 - Game should run on [modern] integrated graphics.
 - Game does not feature DLCs.
 - Project does not accept donations, sponsorships, nor does it include content that a user is required to pay for.
-- Project targets Linux first, Windows second and macOS last.
 - Project is built on C#.
 
- Not gonna lie, now I regret not getting all those darn assets from [HB](https;//humblebundle.com).
+ Not gonna lie, now I regret not getting all those darn assets from [HB](https://humblebundle.com).
 
 #### Inspiration for this project: [MicroTown](https://www.snowyashgames.com/microtown/).
+
 #### Another inspiration for this project [FireTale](https://lukehollenback.itch.io/firetale).
 
 Both of the games look cool, and I suggest you to check them out!
 
-#### [Last update: 17.07.2021]
+#### [Last update: 24.07.2021]

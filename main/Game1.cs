@@ -5,7 +5,6 @@ using main.World.Structure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Texture = main.World.Structure.Texture;
 
 namespace main
 {
@@ -14,7 +13,6 @@ namespace main
         private DefaultEcs.World _world = new DefaultEcs.World();
         private readonly Camera _camera = new Camera();
         private DrawManager _drawManager;
-        private ChunkManager _chunkManager;
         private SpriteBatch _spriteBatch;
         private GraphicsDeviceManager _graphics;
 
@@ -35,7 +33,6 @@ namespace main
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _drawManager = new DrawManager(_spriteBatch,_camera);
-            _chunkManager = new ChunkManager(_camera);
             base.Initialize();
         }
 
@@ -49,7 +46,6 @@ namespace main
             _camera.Update(1);
             _camera.ViewportWidth = GraphicsDevice.Viewport.Width;
             _camera.ViewportHeight = GraphicsDevice.Viewport.Height;
-            _chunkManager.Update(1);
             base.Update(gameTime);
         }
 

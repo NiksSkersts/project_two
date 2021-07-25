@@ -26,47 +26,11 @@
         <PackageReference Include="SimplexNoise" Version="2.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <None Update="Content\Artsy\noisy-grass.xnb">
+      <None Update="Content\GAtlas.xnb">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Content\Artsy\noisy-grounddark.xnb">
+      <None Update="Content\WAtlas.xnb">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Content\Artsy\noisy-lava.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\Artsy\noisy-rock.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\Artsy\noisy-rockhigh.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\Artsy\noisy-sand.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\Artsy\noisy-sandwhite.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\Artsy\noisy-swamp.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\Artsy\noisy-waterdeep.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\Artsy\grass_s.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Content\Artsy\water.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Content" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="bin\Debug\netcoreapp3.1\Content\Artsy\grass.xnb" />
-      <Content Include="Content\Artsy\grass.xnb">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
     </ItemGroup>
 </Project>

@@ -1,15 +1,15 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
-using Collections.Pooled;
+using System.Windows.Forms;
 using DefaultEcs.System;
 using main.Content;
 using main.World.Structure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Texture = main.World.Structure.Texture;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using Texture = SharpDX.Direct3D9.Texture;
 
 namespace main.Systems
 {
@@ -18,9 +18,7 @@ namespace main.Systems
         public bool IsEnabled { get; set; }
         private readonly SpriteBatch _spriteBatch;
         private readonly Camera _camera;
-        private readonly SortedList<(int x, int y), Chunk<object>> _chunks =
-            new SortedList<(int x, int y), Chunk<object>>(Settings.MaxLoadedChunks);
-
+        private readonly Queue<(int width, int height)> _loaded = new Queue<(int width, int height)>(Settings.MaxLoadedChunks);
         public DrawManager(SpriteBatch spriteBatch, Camera camera)
         {
             _spriteBatch = spriteBatch;
@@ -33,70 +31,51 @@ namespace main.Systems
 
         public void Update(int state)
         {
-            #region Debug
-
-            #endregion
-
-            var newposx = (int) ((_camera.Pos.X / Settings.X) / Settings.X) * Settings.X;
-            var newposy = (int) ((_camera.Pos.Y) / Settings.Y / Settings.Y) * Settings.Y;
-            for (var i = -32 + (newposx); i <= 32 + (newposx); i += 32)
+            
+            var tileposx = (int) (((_camera.Pos.ToPoint().X / Settings.X)/Settings.X)*Settings.X)-Settings.X/2;
+            var tileposy = (int) (((_camera.Pos.ToPoint().Y / Settings.Y)/Settings.Y)*Settings.Y)-Settings.X/2;
+            for (int x = -32+tileposx; x < 32+tileposx; x+=32)
             {
-                for (var j = -32 + (newposy); j <= 32 + (newposy); j += 32)
+                for (int y = -32+tileposy; y < 32+tileposy; y+=32)
                 {
-                    if (_chunks.ContainsKey((i, j)) != false) continue;
-                    _chunks.Add((i, j), ChunkMap.Map.Single(p => p.Key == (i, j)).Value);
+                    if (!_loaded.Contains((x,y)))
+                    {
+                        Map.Enque(tileposx,tileposy);
+                        _loaded.Enqueue((x,y));
+                    }
                 }
             }
-
-            if (_chunks == null) return;
-            foreach (var chunk in _chunks.AsEnumerable())
+            foreach (var chunk in _loaded)
             {
-                foreach (var tile in chunk.Value)
+                for (int i = chunk.width; i < chunk.width+Settings.X; i++)
                 {
-                    switch (tile.Terrain)
+                    for (int j = chunk.height; j < chunk.height+Settings.Y; j++)
                     {
-                        case Texture.GrassSavana:
-                            Render(Textures.GrassS, tile);
-                            break;
-                        case Texture.Grass:
-                            Render(Textures.Grass, tile);
-                            break;
-                        case Texture.Water:
-                            Render(Textures.Water, tile);
-                            break;
-                        case Texture.WaterDeep:
-                            Render(Textures.AWaterDeep, tile);
-                            break;
-                        case Texture.Hill:
-                            Render(Textures.ARock, tile);
-                            break;
-                        case Texture.Mountain:
-                            Render(Textures.ARockHigh, tile);
-                            break;
-                        case Texture.Sand:
-                            Render(Textures.ASand, tile);
-                            break;
-                        case Texture.Swamp:
-                            Render(Textures.ASwamp, tile);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        var tileinfo = Map._map[chunk][(i, j)];
+                        Render(tileinfo.Item1,tileinfo.Item2);
                     }
                 }
             }
 
-            while (_chunks.Count > Settings.MaxLoadedChunks)
+            while (_loaded.Count>Settings.MaxLoadedChunks)
             {
-                _chunks.RemoveAt(0);
+                _loaded.Dequeue();
             }
         }
 
-        private void Render<T>(Texture2D texture, Tile<T> tile)
+        private void Render(Tile tile, Content.Texture texture)
         {
             _spriteBatch.Draw(
-                texture,
-                new Vector2(tile.X * Settings.X, tile.Y * Settings.Y),
-                color: Color.White);
+                texture.Sprite,
+                new Vector2((tile.Coordinates.X) * Settings.X, (tile.Coordinates.Y) * Settings.Y),
+                color: Color.White,
+                effects: SpriteEffects.None,
+                rotation: 0f,
+                origin: texture.Origin,
+                scale: 1,
+                sourceRectangle: texture.SourceRectangle,
+                layerDepth: 0);
         }
+        
     }
 }

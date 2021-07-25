@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,51 +7,40 @@ namespace main.Content
 {
     public static class Textures
     {
+        private static ContentManager _contentManager;
         //todo add other textures!
+        private static Texture2D GAtlas { get; set; }
+        private static Texture2D WAtlas { get; set; }
         public static void LoadTexture2D(ContentManager contentManager)
         {
-            AGrass= contentManager.Load<Texture2D>("Artsy\\noisy-grass");
-             AGroundDark= contentManager.Load<Texture2D>("Artsy\\noisy-grounddark");
-             ALava= contentManager.Load<Texture2D>("Artsy\\noisy-lava");
-             ARock= contentManager.Load<Texture2D>("Artsy\\noisy-rock");
-             ARockHigh= contentManager.Load<Texture2D>("Artsy\\noisy-rockhigh");
-             ASand= contentManager.Load<Texture2D>("Artsy\\noisy-sand");
-             ASandWhite= contentManager.Load<Texture2D>("Artsy\\noisy-sandwhite");
-             ASwamp= contentManager.Load<Texture2D>("Artsy\\noisy-swamp");
-             AWaterDeep= contentManager.Load<Texture2D>("Artsy\\noisy-waterdeep");
-             Water= contentManager.Load<Texture2D>("Artsy\\water");
-             //New Textures
-             Grass= contentManager.Load<Texture2D>("Artsy\\grass");
-             GrassS= contentManager.Load<Texture2D>("Artsy\\grass_s");
+            _contentManager = contentManager;
+            GAtlas = contentManager.Load<Texture2D>("GAtlas");
+            WAtlas = contentManager.Load<Texture2D>("WAtlas");
+            Grass = new SortedList<string, Texture>
+             {
+                 {"grass",new Texture(GAtlas,new Rectangle(0,0,32,32),new Vector2(0.5f,0.5f))},
+                 {"water_q1",new Texture(GAtlas,new Rectangle(33,0,32,32),new Vector2(0.5f,0.5f))},
+                 {"water_q2",new Texture(GAtlas,new Rectangle(66,0,32,32),new Vector2(0.5f,0.5f))},
+                 {"water_q3",new Texture(GAtlas,new Rectangle(0,33,32,32),new Vector2(0.5f,0.5f))},
+                 {"water_q7",new Texture(GAtlas,new Rectangle(33,33,32,32),new Vector2(0.5f,0.5f))},
+                 {"water_q9",new Texture(GAtlas,new Rectangle(66,33,32,32),new Vector2(0.5f,0.5f))}
+             };
+             Water = new SortedList<string, Texture>()
+             {
+                 {"water", new Texture(WAtlas, new Rectangle(0, 0, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_full", new Texture(WAtlas, new Rectangle(33, 0, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_q1", new Texture(WAtlas, new Rectangle(66, 0, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_q2", new Texture(WAtlas, new Rectangle(0, 33, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_q3", new Texture(WAtlas, new Rectangle(33, 33, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_q4", new Texture(WAtlas, new Rectangle(0, 66, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_q6", new Texture(WAtlas, new Rectangle(33, 66, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_q7", new Texture(WAtlas, new Rectangle(66, 33, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_q8", new Texture(WAtlas, new Rectangle(66, 66, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_q9", new Texture(WAtlas, new Rectangle(99, 0, 32, 32), new Vector2(0.5f, 0.5f))}
+             };
         }
 
-        public static Texture2D Grass { get; set; }
-        public static Texture2D GrassS { get; set; }
-
-        public static Texture2D Water { get; set; }
-
-        public static Texture2D AWaterDeep { get; set; }
-
-        public static Texture2D ASwamp { get; set; }
-
-        public static Texture2D ASandWhite { get; set; }
-
-        public static Texture2D ASand { get; set; }
-
-        public static Texture2D ARockHigh { get; set; }
-
-        public static Texture2D ARock { get; set; }
-
-        public static Texture2D ALava { get; set; }
-
-        public static Texture2D AGroundDark { get; set; }
-
-        public static Texture2D AGrass { get; set; }
-
-
-
-
-
-
+        public static SortedList<string, Texture> Grass { get; private set; }
+        public static SortedList<string, Texture> Water { get; private set; }
     }
 }

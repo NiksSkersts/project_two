@@ -1,37 +1,64 @@
+#nullable enable
+using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Drawing;
 using System.Linq;
+using main.Content;
 using main.World.Enum;
+using MathNet.Numerics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Texture = main.Content.Texture;
 
 namespace main.World.Structure
 {
-    public class Chunk<T> : IReadOnlyCollection<Tile<T>>
+    public class Chunk
     {
-        public int Width { get; }
-        public int Height { get; }
-        public int Count { get; }
-        private readonly T[,] _map;
-        public Chunk(int height, int width )
+        public (Tile, Texture) this[(int x,int y) pos] => (_chunk[pos], _texture[pos]);
+
+        public Chunk GenerateChunk((int width, int height) size)
         {
-            Height = height;
-            Width = width;
-            _map = new T[Settings.X,Settings.Y];
+            return new Chunk(size);
+        }
+        private readonly SortedList<(int x, int y), Tile> _chunk;
+        private readonly SortedList<(int x, int y), Texture> _texture;
+
+        internal Chunk((int width, int height) size)
+        {
+            var (sortedList, texture2Ds) = Generate(size);
+            _chunk = sortedList;
+            _texture = texture2Ds;
         }
 
-        public T this[int x, int y]
+        private (SortedList<(int x, int y), Tile>, SortedList<(int x, int y), Texture>) Generate((int width, int height) size)
         {
-            get => _map[x, y];
-            set => _map[x, y] = value;
-        }
-        public IEnumerator<Tile<T>> GetEnumerator()
-        {
-            for (var x =Width-Settings.RenderSize/2;x< Width+Settings.RenderSize/2;x++)
-            for (var y = Height-Settings.RenderSize/2; y < Height+Settings.RenderSize/2; y++)
+            var tiles = new SortedList<(int x, int y), Tile>();
+            var textures = new SortedList<(int x, int y),Texture>();
+            for (var x = size.width;x < size.width+Settings.X; x++)
             {
-                yield return new Tile<T>(x, y);
+                for (var y =size.height; y < size.height+Settings.Y; y++)
+                {
+                    tiles.Add((x,y),new Tile(x,y));
+                    textures.Add((x,y),DetermineTexture(tiles[(x,y)]));
+                }
             }
+
+            return (tiles, textures);
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        private Texture DetermineTexture(Tile tile)
+        {
+            var temp = tile.Temperature;
+            var hum = tile.Humidity;
+            var (x, y, z) = tile.Coordinates;
+            if (z<50)
+                return Textures.Water["water"];
+            if (z >= 50)
+                return Textures.Grass["grass"];
+            return default;
+        }
     }
 }

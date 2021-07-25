@@ -1,17 +1,18 @@
-﻿using System;
+﻿using System.Security.Cryptography;
 using main.Content;
 using main.Systems;
-using main.World.Structure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
+using MonoGame.Extended.ViewportAdapters;
 
 namespace main
 {
     public class Game1 : Game
     {
+        private OrthographicCamera _orthographicCamera;
         private DefaultEcs.World _world = new DefaultEcs.World();
-        private readonly Camera _camera = new Camera();
         private DrawManager _drawManager;
         private SpriteBatch _spriteBatch;
         private GraphicsDeviceManager _graphics;
@@ -31,8 +32,9 @@ namespace main
 
         protected override void Initialize()
         {
+            _orthographicCamera = new OrthographicCamera(new BoxingViewportAdapter(this.Window,GraphicsDevice,600,300,0,0));
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _drawManager = new DrawManager(_spriteBatch,_camera);
+            _drawManager = new DrawManager(_spriteBatch,_orthographicCamera);
             base.Initialize();
         }
 
@@ -43,16 +45,32 @@ namespace main
 
         protected override void Update(GameTime gameTime)
         {
-            _camera.Update(1);
-            _camera.ViewportWidth = GraphicsDevice.Viewport.Width;
-            _camera.ViewportHeight = GraphicsDevice.Viewport.Height;
+            var currentPressedKeys = Keyboard.GetState().GetPressedKeys();
+            foreach (var key in currentPressedKeys)
+            {
+                switch (key)
+                {
+                    case Keys.Up:
+                        _orthographicCamera.Move(-Vector2.UnitY*Settings.MovementAccel);
+                        break;
+                    case Keys.Down:
+                        _orthographicCamera.Move(Vector2.UnitY*Settings.MovementAccel);
+                        break;
+                    case Keys.Left:
+                        _orthographicCamera.Move(-Vector2.UnitX*Settings.MovementAccel);
+                        break;
+                    case Keys.Right:
+                        _orthographicCamera.Move(Vector2.UnitX*Settings.MovementAccel);
+                        break;
+                }
+            }
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin(transformMatrix: _camera.TranslationMatrix, sortMode: SpriteSortMode.BackToFront,samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(transformMatrix: _orthographicCamera.GetViewMatrix(), sortMode: SpriteSortMode.BackToFront,samplerState: SamplerState.PointWrap);
             _drawManager.Update(1);
             _spriteBatch.End();
 

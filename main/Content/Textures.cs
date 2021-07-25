@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Sprites;
 
 namespace main.Content
 {
@@ -16,6 +17,8 @@ namespace main.Content
             _contentManager = contentManager;
             GAtlas = contentManager.Load<Texture2D>("GAtlas");
             WAtlas = contentManager.Load<Texture2D>("WAtlas");
+            Tree = contentManager.Load<Texture2D>("tree");
+            Forest = contentManager.Load<Texture2D>("forest");
             Grass = new SortedList<string, Texture>
              {
                  {"grass",new Texture(GAtlas,new Rectangle(0,0,32,32),new Vector2(0.5f,0.5f))},
@@ -28,7 +31,6 @@ namespace main.Content
              Water = new SortedList<string, Texture>()
              {
                  {"water", new Texture(WAtlas, new Rectangle(0, 0, 32, 32), new Vector2(0.5f, 0.5f))},
-                 {"water_full", new Texture(WAtlas, new Rectangle(33, 0, 32, 32), new Vector2(0.5f, 0.5f))},
                  {"water_q1", new Texture(WAtlas, new Rectangle(66, 0, 32, 32), new Vector2(0.5f, 0.5f))},
                  {"water_q2", new Texture(WAtlas, new Rectangle(0, 33, 32, 32), new Vector2(0.5f, 0.5f))},
                  {"water_q3", new Texture(WAtlas, new Rectangle(33, 33, 32, 32), new Vector2(0.5f, 0.5f))},
@@ -36,9 +38,14 @@ namespace main.Content
                  {"water_q6", new Texture(WAtlas, new Rectangle(33, 66, 32, 32), new Vector2(0.5f, 0.5f))},
                  {"water_q7", new Texture(WAtlas, new Rectangle(66, 33, 32, 32), new Vector2(0.5f, 0.5f))},
                  {"water_q8", new Texture(WAtlas, new Rectangle(66, 66, 32, 32), new Vector2(0.5f, 0.5f))},
-                 {"water_q9", new Texture(WAtlas, new Rectangle(99, 0, 32, 32), new Vector2(0.5f, 0.5f))}
+                 {"water_q9", new Texture(WAtlas, new Rectangle(99, 0, 32, 32), new Vector2(0.5f, 0.5f))},
+                 {"water_full", new Texture(WAtlas, new Rectangle(33, 0, 32, 32), new Vector2(0.5f, 0.5f))},
              };
         }
+
+        public static Texture2D Forest { get; set; }
+
+        public static Texture2D Tree { get; set; }
 
         public static SortedList<string, Texture> Grass { get; private set; }
         public static SortedList<string, Texture> Water { get; private set; }

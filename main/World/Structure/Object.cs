@@ -1,17 +1,15 @@
-﻿using main.World.Enum;
+﻿using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Sprites;
+using Texture = main.Content.Texture;
 
 namespace main.World.Structure
 {
-    public class Object<T>
+    public readonly struct Object
     {
-        public float X { get; set; }
-        public float Y { get; set; }
-        public ObjectType Type { get; }
-        public Object(float x, float y, ObjectType type)
+        public readonly Texture2D Texture;
+        public Object(Texture2D texture)
         {
-            X = x;
-            Y = y;
-            Type = type;
+            Texture = texture;
         }
     }
 }

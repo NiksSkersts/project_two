@@ -1,23 +1,17 @@
 #nullable enable
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Drawing;
-using System.Linq;
 using main.Content;
-using main.World.Enum;
-using MathNet.Numerics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Texture = main.Content.Texture;
 
 namespace main.World.Structure
 {
     public class Chunk
     {
-        public (Tile, Texture) this[(int x,int y) pos] => (_chunk[pos], _texture[pos]);
+        public (Tile, Texture) this[(int x,int y) pos]
+        {
+            get => (_chunk[pos], _texture[pos]);
+            set => (_chunk[pos], _texture[pos]) = value;
+        }
 
         public Chunk GenerateChunk((int width, int height) size)
         {
@@ -37,15 +31,14 @@ namespace main.World.Structure
         {
             var tiles = new SortedList<(int x, int y), Tile>();
             var textures = new SortedList<(int x, int y),Texture>();
-            for (var x = size.width;x < size.width+Settings.X; x++)
+            for (var x = size.width;x < size.width+Settings.RenderSize; x++)
             {
-                for (var y =size.height; y < size.height+Settings.Y; y++)
+                for (var y =size.height; y < size.height+Settings.RenderSize; y++)
                 {
                     tiles.Add((x,y),new Tile(x,y));
                     textures.Add((x,y),DetermineTexture(tiles[(x,y)]));
                 }
             }
-
             return (tiles, textures);
         }
 
@@ -54,11 +47,11 @@ namespace main.World.Structure
             var temp = tile.Temperature;
             var hum = tile.Humidity;
             var (x, y, z) = tile.Coordinates;
-            if (z<50)
-                return Textures.Water["water"];
-            if (z >= 50)
-                return Textures.Grass["grass"];
-            return default;
+            if (z < 50) return Textures.Water["water"];
+            if (hum>5 && temp>20 && z>70&& z<=75) Map.ObjMap.Add(((int)tile.Coordinates.X,(int)tile.Coordinates.Y),new Object(Textures.Tree));
+            if (hum>5 && temp>20 && z>75) Map.ObjMap.Add(((int)tile.Coordinates.X,(int)tile.Coordinates.Y),new Object(Textures.Forest));
+                if (z > 200) return Textures.Grass["water_q1"];
+            return Textures.Grass["grass"];
         }
     }
 }

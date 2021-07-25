@@ -22,6 +22,8 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+        <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
+        <PackageReference Include="MonoGame.Extended.Graphics" Version="3.8.0" />
         <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641" />
         <PackageReference Include="SimplexNoise" Version="2.0.0" />
     </ItemGroup>
@@ -30,6 +32,12 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <None Update="Content\WAtlas.xnb">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Content\tree.xnb">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Content\forest.xnb">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>

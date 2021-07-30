@@ -1,4 +1,3 @@
-
 #### Main pillars of the project:
 
 - Game is licenced under GPL3, free forever. This is to avoid a possible scenario when a game gets abandoned just because the main dev lost any interest or jumped out of the window.

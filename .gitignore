@@ -3,3 +3,10 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+global.json
+project_two.sln.DotSettings.user
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+.vs/project_two/DesignTimeBuild/.dtbcache.v2
+.vs/project_two/v17/.suo

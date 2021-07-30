@@ -17,7 +17,7 @@ namespace main.World.Structure
             Temperature = DetermineTemperature(Coordinates.Z);
             Humidity = DetermineHumidity(Coordinates.Z,Temperature);
         }
-        private static int DetermineTemperature(float determineHeight) => (int) (Settings.MaxTemp * Math.Sin(Settings.Period * determineHeight));
+        private static int DetermineTemperature(float determineHeight) => (int)(Settings.MaxTemp * Math.Sin(Settings.Period * determineHeight));
 
         private static int DetermineHumidity(float height, int temperature) =>
             (int) (Settings.MaxTemp *

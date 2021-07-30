@@ -7,18 +7,13 @@ namespace main.World.Structure
 {
     public class Chunk
     {
+        private readonly SortedList<(int x, int y), Tile> _chunk;
+        private readonly SortedList<(int x, int y), Texture> _texture;
         public (Tile, Texture) this[(int x,int y) pos]
         {
             get => (_chunk[pos], _texture[pos]);
             set => (_chunk[pos], _texture[pos]) = value;
         }
-
-        public Chunk GenerateChunk((int width, int height) size)
-        {
-            return new Chunk(size);
-        }
-        private readonly SortedList<(int x, int y), Tile> _chunk;
-        private readonly SortedList<(int x, int y), Texture> _texture;
 
         internal Chunk((int width, int height) size)
         {
@@ -50,7 +45,7 @@ namespace main.World.Structure
             if (z < 50) return Textures.Water["water"];
             if (hum>5 && temp>20 && z>70&& z<=75) Map.ObjMap.Add(((int)tile.Coordinates.X,(int)tile.Coordinates.Y),new Object(Textures.Tree));
             if (hum>5 && temp>20 && z>75) Map.ObjMap.Add(((int)tile.Coordinates.X,(int)tile.Coordinates.Y),new Object(Textures.Forest));
-                if (z > 200) return Textures.Grass["water_q1"];
+                if (z > 200) Map.ObjMap.Add(((int)tile.Coordinates.X,(int)tile.Coordinates.Y),new Object(Textures.Mountain)) ;
             return Textures.Grass["grass"];
         }
     }

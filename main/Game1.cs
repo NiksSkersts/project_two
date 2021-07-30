@@ -70,10 +70,9 @@ namespace main
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin(transformMatrix: _orthographicCamera.GetViewMatrix(), sortMode: SpriteSortMode.BackToFront,samplerState: SamplerState.PointWrap);
+            _spriteBatch.Begin(transformMatrix: _orthographicCamera.GetViewMatrix(new Vector2(Settings.RenderSize)), sortMode: SpriteSortMode.BackToFront,samplerState: SamplerState.PointWrap);
             _drawManager.Update(1);
             _spriteBatch.End();
-
             base.Draw(gameTime);
         }
     }

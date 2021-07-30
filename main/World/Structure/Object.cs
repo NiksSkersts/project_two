@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Sprites;
-using Texture = main.Content.Texture;
 
 namespace main.World.Structure
 {

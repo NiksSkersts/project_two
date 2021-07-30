@@ -19,6 +19,7 @@ namespace main.Content
             WAtlas = contentManager.Load<Texture2D>("WAtlas");
             Tree = contentManager.Load<Texture2D>("tree");
             Forest = contentManager.Load<Texture2D>("forest");
+            Mountain = contentManager.Load<Texture2D>("mountain");
             Grass = new SortedList<string, Texture>
              {
                  {"grass",new Texture(GAtlas,new Rectangle(0,0,32,32),new Vector2(0.5f,0.5f))},
@@ -42,6 +43,8 @@ namespace main.Content
                  {"water_full", new Texture(WAtlas, new Rectangle(33, 0, 32, 32), new Vector2(0.5f, 0.5f))},
              };
         }
+
+        public static Texture2D Mountain { get; set; }
 
         public static Texture2D Forest { get; set; }
 
